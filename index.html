@@ -17,17 +17,37 @@ Sell house button;
 Refurbish house button; -->
 
 <!DOCTYPE html>
-<html>
+<html ng-app="game">
 <head>
 	<title>unReal Estate</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
-	<button class="buy">Buy</button>
+	<div class="container" ng-controller="gameController as gameData">
+		<div class="row">
+			<div class="col-sm-6">
+				<h1>Player</h1>
+				<p>Savings: $<span>{{gameData.playerSavings}}</span></p>
+				<p>Debts: $<span>{{gameData.playerDebt}}</span></p>
+			<button ng-click="gameData.buy()">Buy 1 Studio</button>
+			</div>
+			<div class="col-sm-6">
+				<p>{{gameData.date}}</p>
+			</div>
+			
+		</div>
+		<div class="row">
+			
+		</div>
+	</div>
+
 	<button class="sell">Sell</button>
-	<button class="cancel">Cancel</button>
+	<button class="cancel">Cancel Mortgage</button>
 	<button class="refurbish">Refurbish</button>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

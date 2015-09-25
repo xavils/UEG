@@ -1,4 +1,8 @@
-$( document ).ready(function() {
+angular.module('game', [])
+  
+.controller('gameController', function() {
+	var gameData = this;
+
 	
 	var counter = 0;
 	var year = 2000;
@@ -11,7 +15,8 @@ $( document ).ready(function() {
 	var player = {};
 	player.savings = 38000;
 	player.debt = 0;
-	
+	gameData.playerSavings = player.savings;
+
 	var properties = [];
 	var property ={}	
 
@@ -23,19 +28,18 @@ $( document ).ready(function() {
 	property.refurbish = Math.round(studio.totalPrice * 0.2);
 	property.devaluation = 0;
 
-	$( ".buy" ).one( "click", function() {
-  		setTimeout(month,1000);
-	});
-
-	$( ".buy" ).click(function() {
+	gameData.buy = function() {
 		if (studio.moneyNeeded <= player.savings) {
+			if (year == 2000) {
+				setTimeout(month,1000);
+			}
 			properties.push(property)
 			player.savings-= property.totalPrice * 0.2;
 			player.debt+= property.mortgage;
 
 			setTimeout(propertyStatus,1000)
 		}
-	});
+	};
 
 	function month() {
 		counter +=1;
@@ -100,6 +104,7 @@ $( document ).ready(function() {
 			properties.splice(0, 1);
 
 			console.log(properties);
+			return;
 		});
 		
 		console.log("------------------------------");
@@ -114,6 +119,7 @@ $( document ).ready(function() {
 		if (properties.length != 0) {
 			setTimeout(propertyStatus, 1000);
 		}
-	}
-
+	};
 });
+	
+
