@@ -25,25 +25,34 @@ Refurbish house button; -->
 <body>
 	<div class="container" ng-controller="gameController as gameData">
 		<div class="row">
-			<div class="col-sm-6">
+			<div class="col-sm-3">
 				<h1>Player</h1>
-				<p>Savings: $<span>{{gameData.playerSavings}}</span></p>
-				<p>Debts: $<span>{{gameData.playerDebt}}</span></p>
-			<button ng-click="gameData.buy()">Buy 1 Studio</button>
+				<p>Savings: $<span>{{playerSavings}}</span></p>
+				<p>Debts: $<span>{{playerDebt}}</span></p>	
 			</div>
-			<div class="col-sm-6">
-				<p>{{gameData.date}}</p>
+			<div class="col-sm-3">
+				<p>{{date}}</p>
+			</div>
+			<div class="col-sm-3">
+				<p>{{studioTotalPrice}}</p>
+				<button ng-click="gameData.buy()">Buy 1 Studio</button>
 			</div>
 			
 		</div>
-		<div class="row">
-			
+		<div class="row playerProperties">
+			<div ng-repeat="property in properties" class="col-xs-6 col-sm-3">
+				<p>Value: {{property.totalPrice}}</p>
+				<p>Rent: {{property.rent}}</p>
+				<p>Mortage: {{property.monthlyPayment}}</p>
+	          	<button class="sell">Sell</button>
+				<p>Total debt: {{property.mortgage}}</p>
+				<button class="cancel">Cancel Mortgage</button>
+				<p>Cancel Mortgage: {{property.cancel}}</p>
+				<button class="refurbish">Refurbish</button>
+				<p>Refurbish: {{property.refurbish}}</p>
+	        </div>
 		</div>
 	</div>
-
-	<button class="sell">Sell</button>
-	<button class="cancel">Cancel Mortgage</button>
-	<button class="refurbish">Refurbish</button>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
