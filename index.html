@@ -33,12 +33,18 @@ Refurbish house button; -->
 				<p>Debts: $<span>{{playerDebt}}</span></p>	
 			</div>
 			<div class="col-sm-3">
-				<button ng-click="gameData.buy()" class="buy green">Buy 1 Studio - {{studioTotalPrice}}</button>
+				<button ng-click="gameData.buy(studioPrice)" class="buy green">Buy Studio - ${{studioPrice}}</button>
+				<button ng-click="gameData.buy(flatPrice)" class="buy">Buy Apartment - ${{flatPrice}}</button>
+				<button ng-click="gameData.buy(penthousePrice)" class="buy">Buy Penthouse - ${{penthousePrice}}</button>
+				<button ng-click="gameData.buy(villaPrice)" class="buy">Buy Villa - ${{villaPrice}}</button>
+				<button ng-click="gameData.buy(blockPrice)" class="buy">Buy Block - ${{blockPrice}}</button>
+				<button ng-click="gameData.buy(towerPrice)" class="buy">Buy Tower - ${{towerPrice}}</button>
 			</div>
 			
 		</div>
 		<div class="row playerProperties">
 			<div ng-repeat="property in properties" class="col-xs-6 col-sm-3">
+				<p>{{property.propertyIs}}</p>
 				<p>Rent: {{property.rent}}</p>
 				<p>Mortage: {{property.monthlyPayment}}</p>
 	          	<button ng-click="gameData.sell($index)" class="sell {{property.colorSell}}">Sell - ${{property.totalPrice}}</button>
