@@ -1,7 +1,7 @@
 angular.module('game', [])
   
-.controller('gameController', ['$scope', '$interval',
-  function($scope, $interval) {
+.controller('gameController', ['$scope',
+  function($scope) {
 	var gameData = this;
 
 	// Calendar
@@ -21,22 +21,10 @@ angular.module('game', [])
 
 	// Player properties
 	$scope.properties = [];
-	// var property ={}	
-
-	// property.totalPrice = $scope.studioTotalPrice;
-	// property.mortgage = Math.round(($scope.studioTotalPrice * 0.8 * 1.2) + $scope.studioTotalPrice * 0.8);
-	// property.monthlyPayment = Math.round(property.mortgage / 480);
-	// property.rent = Math.round($scope.studioTotalPrice / 165);
-	// property.cancel = Math.round($scope.studioTotalPrice * 0.8);
-	// property.refurbish = Math.round($scope.studioTotalPrice * 0.2);
-	// property.devaluation = 0;
-
 
 	gameData.buy = function() {
 		if ($scope.studioMoneyNeeded <= $scope.playerSavings) {
-			if (year == 1999) {
-				setTimeout(month,1000);
-			}
+
 			$scope.properties.push({
 				totalPrice: $scope.studioTotalPrice,
 				mortgage: Math.round(($scope.studioTotalPrice * 0.8 * 1.2) + $scope.studioTotalPrice * 0.8),
@@ -44,14 +32,21 @@ angular.module('game', [])
 				rent: Math.round($scope.studioTotalPrice / 165),
 				cancel: Math.round($scope.studioTotalPrice * 0.8),
 				refurbish: Math.round($scope.studioTotalPrice * 0.2),
-				devaluation: 0
+				devaluation: 0,
+				colorSell: "none",
+				colorCancel: "none",
+				colorRefurbish: "none"
 			})
 
 			$scope.playerSavings-= Math.round($scope.studioTotalPrice * 0.2);
 			$scope.playerDebt+= Math.round(($scope.studioTotalPrice * 0.8 * 1.2) + $scope.studioTotalPrice * 0.8);
 
-			// console.log($scope.properties);
-			setTimeout(propertyStatus,1000)
+			if (year == 1999) {
+				setTimeout(month,1000);
+			}
+			if ($scope.properties.length == 1) {
+				setTimeout(propertyStatus,1000);
+			}
 		}
 	};
 
@@ -67,81 +62,95 @@ angular.module('game', [])
 			counter = 0;
 		}
 
-		// console.log("------------------------------");
-		// console.log(monthArray[counter] + " " + year);
-		// console.log("studioPrice: " + $scope.studioTotalPrice);
-		// console.log("------------------------------");
-
 		$scope.$apply(function(){
 			$scope.date = monthArray[counter] + " " + year;
+			$scope.playerSavings+= Math.round($scope.playerSavings * 0.0025);
 		});
 		
 		counter +=1;
-
 		setTimeout(month, 1000);
 	};
 
 	function propertyStatus() {
-		$scope.properties[0].devaluation +=1;
-		$scope.properties[0].totalPrice = Math.round($scope.properties[0].totalPrice + $scope.properties[0].totalPrice * (0.006 - ($scope.properties[0].devaluation / 180 * 0.006)));
-		$scope.properties[0].refurbish = Math.round($scope.studioTotalPrice * 0.2);
-
-		if ($scope.properties[0].cancel != 0) {
-			$scope.properties[0].cancel-= Math.round($scope.properties[0].monthlyPayment * 0.45);
-		}
-
-		if ($scope.properties[0].devaluation%12 == 0) {
-			$scope.properties[0].rent = Math.round($scope.properties[0].totalPrice / 165);
-		}
-
-		if ($scope.playerDebt > 0) {
-			$scope.playerSavings+= $scope.properties[0].rent;
-			$scope.playerSavings-= $scope.properties[0].monthlyPayment;
-			$scope.playerDebt-= $scope.properties[0].monthlyPayment;
+		if (($scope.studioMoneyNeeded > $scope.playerSavings)) {
+			$( ".buy" ).removeClass( "green" );
 		} else {
-			$scope.playerDebt = 0;
-			$scope.playerSavings+= $scope.properties[0].rent;
-		}
-
-		$( ".refurbish" ).click(function() {
-			if ($scope.properties[0].refurbish <= $scope.playerSavings && $scope.properties[0].devaluation > 179) {
-				$scope.playerSavings-= $scope.properties[0].refurbish;
-				$scope.properties[0].devaluation = 0;
-				$scope.properties[0].totalPrice+= $scope.properties[0].totalPrice * 0.15;
-			};
-		});
-
-		$( ".cancel" ).click(function() {
-			if ($scope.properties[0].cancel <= $scope.playerSavings) {
-				$scope.playerSavings-= $scope.properties[0].cancel;
-				$scope.playerDebt-= $scope.properties[0].mortgage;
-				$scope.properties[0].mortgage = 0;
-				$scope.properties[0].cancel = 0;
-			}		
-		});
-
-		$( ".sell" ).click(function() {
-			$scope.playerSavings+= $scope.properties[0].totalPrice - $scope.properties[0].cancel;
-			$scope.playerDebt-= 0;
-			$scope.properties.splice(0, 1);
-
-			console.log(properties);
-			return;
-		});
-		
-		// console.log("------------------------------");
-		// console.log("properties[0]Price: " + $scope.property.totalPrice);
-		// console.log("propertyRent: " + $scope.property.rent);
-		// console.log("playerSavings: " + $scope.playerSavings);
-		// console.log("playerDebt: " + $scope.playerDebt);
-		// console.log("cancelMortgage: " + $scope.property.cancel);
-		// console.log("propertyRefurbish: " + $scope.property.refurbish);
-		// console.log("------------------------------");
+			$( ".buy" ).addClass( "green" );
+		};
 
 		if ($scope.properties.length != 0) {
+			for (i=0; i<$scope.properties.length; i++) {
+				$scope.properties[i].devaluation +=1;
+
+				if ($scope.properties[i].devaluation > 179) {
+					console.log($scope.properties[i].devaluation);
+					$scope.properties[i].totalPrice = Math.round($scope.properties[i].totalPrice + ($scope.properties[i].totalPrice * 0.006));
+				} else {
+					$scope.properties[i].totalPrice = Math.round($scope.properties[i].totalPrice + $scope.properties[i].totalPrice * (0.006 - ($scope.properties[i].devaluation / 450 * 0.006)));
+				}
+
+				$scope.properties[i].refurbish = Math.round($scope.studioTotalPrice * 0.2);
+
+				if ($scope.properties[i].cancel > 0) {
+					$scope.properties[i].cancel-= Math.round($scope.properties[i].monthlyPayment * 0.45);
+				} else {
+					$scope.properties[i].cancel = 0;
+				}
+
+				if ($scope.properties[i].devaluation%12 == 0) {
+					$scope.properties[i].rent = Math.round($scope.properties[i].totalPrice / 165);
+				}
+
+				if ($scope.playerDebt > 0) {
+					$scope.properties[i].mortgage-= $scope.properties[i].monthlyPayment;
+					$scope.playerSavings+= $scope.properties[i].rent;
+					$scope.playerSavings-= $scope.properties[i].monthlyPayment;
+					$scope.playerDebt-= $scope.properties[i].monthlyPayment;
+				} else {
+					$scope.playerDebt = 0;
+					$scope.playerSavings+= $scope.properties[i].rent;
+				}
+
+				if ($scope.properties[i].refurbish <= $scope.playerSavings && $scope.properties[i].devaluation > 179) {
+					$scope.properties[i].colorRefurbish = "green";
+
+					gameData.refurbish = function($index) {
+						$scope.properties[$index].colorRefurbish = "none";
+						$scope.playerSavings-= $scope.properties[$index].refurbish;
+						$scope.properties[$index].devaluation = 0;
+						$scope.properties[$index].totalPrice = $scope.studioTotalPrice;
+					};
+				};
+
+				if ($scope.properties[i].cancel <= $scope.playerSavings) {
+					if ($scope.properties[i].cancel > 0) {
+						$scope.properties[i].colorCancel = "green";
+					};
+
+					gameData.cancel = function($index) {
+						$scope.properties[$index].colorCancel = "none";
+						$scope.playerSavings-= $scope.properties[$index].cancel;
+						$scope.playerDebt-= $scope.properties[$index].mortgage;
+						$scope.properties[$index].mortgage = 0;
+						$scope.properties[$index].cancel = 0;
+						$scope.properties[$index].monthlyPayment = 0;
+					};
+				}		
+
+				if ($scope.properties[i].devaluation > 12) {
+					$scope.properties[i].colorSell = "green";
+				};
+
+				gameData.sell = function($index) {
+					if ($scope.properties[$index].devaluation > 12) {
+						$scope.playerSavings+= $scope.properties[$index].totalPrice - $scope.properties[$index].cancel;
+						$scope.playerDebt-= $scope.properties[$index].mortgage;
+						$scope.properties.splice([$index], 1);
+					};
+				};				
+			}
+			
 			setTimeout(propertyStatus, 1000);
-		}
+    	}
 	};
 }]);
-	
-
