@@ -6,7 +6,3 @@
 - refactor js
 - animations
 - mini numbers
-- new data
-	net worth
-	rent income
-	mortgage income

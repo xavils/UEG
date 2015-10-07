@@ -45,7 +45,7 @@ angular.module('game', [])
 		$scope.moneyNeeded = Math.round($scope.generalTotalPrice * 0.2);
 		$scope.typeString = stringType
 
-		if ($scope.moneyNeeded <= $scope.playerSavings) {
+		if (($scope.moneyNeeded <= $scope.playerSavings) && ($scope.properties.length < 15)) {
 
 			$scope.properties.push({
 				propertyIs: $scope.typeString,
@@ -66,12 +66,12 @@ angular.module('game', [])
 			$scope.playerDebt+= Math.round(($scope.generalTotalPrice * 0.8 * 1.2) + $scope.generalTotalPrice * 0.8);
 
 			if (year == 1999) {
-				setTimeout(month,100);
+				setTimeout(month,500);
 				$('.howToPlay').hide();
 				$('.propertyList').show();
 			}
 			if ($scope.properties.length == 1) {
-				setTimeout(propertyStatus,100);
+				setTimeout(propertyStatus,500);
 			}
 		}
 	};
@@ -122,7 +122,7 @@ angular.module('game', [])
 		}
 
 		counter +=1;
-		setTimeout(month, 100);
+		setTimeout(month, 500);
 	};
 
 	function propertyStatus() {
@@ -130,8 +130,11 @@ angular.module('game', [])
 			return;
 		}
 
-		$scope.netWorth = $scope.playerSavings - $scope.playerDebt + $scope.totalMortgage;
+		$scope.netWorth = $scope.playerSavings - $scope.totalMortgage + $scope.totalPropertiesPrice;
 		$scope.totalMortgage = 0;
+		$scope.totalPropertiesPrice = 0;
+		$scope.totalRent = 0;
+		$scope.totalMonthlyMortgage = 0;
 
 		if (($scope.studioPrice * 0.2) < $scope.playerSavings) {
 			$( ".studio" ).addClass( "green" );
@@ -177,7 +180,9 @@ angular.module('game', [])
 		if ($scope.properties.length != 0) {
 			for (i=0; i<$scope.properties.length; i++) {
 				$scope.properties[i].marketPrice = Math.round($scope.properties[i].marketPrice + ($scope.properties[i].marketPrice * $scope.recession));
-
+				$scope.totalPropertiesPrice+= $scope.properties[i].marketPrice;
+				$scope.totalRent+= $scope.properties[i].rent;
+				$scope.totalMonthlyMortgage+= $scope.properties[i].monthlyPayment;
 				$scope.properties[i].devaluation +=1;
 
 				if ($scope.properties[i].devaluation > 179) {
@@ -197,7 +202,6 @@ angular.module('game', [])
 
 				if ($scope.properties[i].devaluation%12 == 0) {
 					$scope.properties[i].rent = Math.round($scope.properties[i].totalPrice / 165);
-					$scope.totalMortgage+= $scope.properties[i].mortgage;
 				}
 
 				if ($scope.playerDebt > 0) {
@@ -252,7 +256,7 @@ angular.module('game', [])
 				};				
 			}
 			
-			setTimeout(propertyStatus, 100);
+			setTimeout(propertyStatus, 500);
     	}
 	};
 }]);
