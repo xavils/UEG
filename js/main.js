@@ -18,12 +18,17 @@ angular.module('game', [])
 	$scope.villaPrice = 1000000;
 	$scope.blockPrice = 2000000;
 	$scope.towerPrice = 5000000;
+	$scope.complexPrice = 15000000;
+	$scope.urbanPrice = 50000000;
+
 	$scope.studio = "studio";
 	$scope.apartment = "apartment";
 	$scope.penthouse = "penthouse";
 	$scope.villa = "villa";
 	$scope.block = "block";
 	$scope.tower = "tower";
+	$scope.complex = "complex";
+	$scope.urban = "urban";
 	
 	// Player initial data
 	$scope.playerSavings = 38000;
@@ -68,10 +73,10 @@ angular.module('game', [])
 
 	// Function to update calendar and general market price
 	function month() {
-		if ((year % 100 <= 35) || ((year % 100 <= 85) && (year % 100 > 50))) {
-			$scope.recession = 0.003;
+		if ((year % 100 <= 10) || ((year % 100 < 25) && (year % 100 > 15)) || ((year % 100 < 40) && (year % 100 > 30)) || ((year % 100 < 55) && (year % 100 > 45)) || ((year % 100 < 70) && (year % 100 > 60)) || ((year % 100 < 85) && (year % 100 > 75)) || year % 100 > 90) {
+			$scope.recession = 0.0035;
 		} else {
-			$scope.recession = -0.005;
+			$scope.recession = -0.0045;
 		}
 
 		$scope.$apply(function(){
@@ -81,6 +86,8 @@ angular.module('game', [])
 			$scope.villaPrice = Math.round($scope.villaPrice + $scope.villaPrice * $scope.recession);
 			$scope.blockPrice = Math.round($scope.blockPrice + $scope.blockPrice * $scope.recession);
 			$scope.towerPrice = Math.round($scope.towerPrice + $scope.towerPrice * $scope.recession);
+			$scope.complexPrice = Math.round($scope.complexPrice + $scope.complexPrice * $scope.recession);
+			$scope.urbanPrice = Math.round($scope.urbanPrice + $scope.urbanPrice * $scope.recession);
 		});
 
 		if (counter%12 == 0) {
@@ -98,41 +105,47 @@ angular.module('game', [])
 	};
 
 	function propertyStatus() {
-		if (($scope.studioPrice * 0.2) > $scope.playerSavings) {
-			$( ".studio" ).removeClass( "green" );
-			$( ".flat" ).removeClass( "green" );
-			$( ".penthouse" ).removeClass( "green" );
-			$( ".villa" ).removeClass( "green" );
-			$( ".block" ).removeClass( "green" );
-			$( ".tower" ).removeClass( "green" );
-		} else if (($scope.flatPrice * 0.2) > $scope.playerSavings) {
+
+		if (($scope.studioPrice * 0.2) < $scope.playerSavings) {
 			$( ".studio" ).addClass( "green" );
-			$( ".flat" ).removeClass( "green" );
-			$( ".penthouse" ).removeClass( "green" );
-			$( ".villa" ).removeClass( "green" );
-			$( ".block" ).removeClass( "green" );
-			$( ".tower" ).removeClass( "green" );
-		} else if (($scope.penthousePrice * 0.2) > $scope.playerSavings) {
+		} else {
+			$( ".studio" ).removeClass( "green" );
+		}
+		if (($scope.flatPrice * 0.2) < $scope.playerSavings) {
 			$( ".flat" ).addClass( "green" );
-			$( ".penthouse" ).removeClass( "green" );
-			$( ".villa" ).removeClass( "green" );
-			$( ".block" ).removeClass( "green" );
-			$( ".tower" ).removeClass( "green" );
-		} else if (($scope.villaPrice * 0.2) > $scope.playerSavings) {
+		} else {
+			$( ".flat" ).removeClass( "green" );
+		}
+		if (($scope.penthousePrice * 0.2) < $scope.playerSavings) {
 			$( ".penthouse" ).addClass( "green" );
-			$( ".villa" ).removeClass( "green" );
-			$( ".block" ).removeClass( "green" );
-			$( ".tower" ).removeClass( "green" );
-		} else if (($scope.blockPrice * 0.2) > $scope.playerSavings) {
+		} else {
+			$( ".penthouse" ).removeClass( "green" );
+		}
+		if (($scope.villaPrice * 0.2) < $scope.playerSavings) {
 			$( ".villa" ).addClass( "green" );
-			$( ".block" ).removeClass( "green" );
-			$( ".tower" ).removeClass( "green" );
-		} else if (($scope.towerPrice * 0.2) > $scope.playerSavings) {
+		} else {
+			$( ".villa" ).removeClass( "green" );
+		}
+		if (($scope.blockPrice * 0.2) < $scope.playerSavings) {
 			$( ".block" ).addClass( "green" );
-			$( ".tower" ).removeClass( "green" );
-		} else if (($scope.towerPrice * 0.2) > $scope.playerSavings) {
+		} else {
+			$( ".block" ).removeClass( "green" );
+		}
+		if (($scope.towerPrice * 0.2) < $scope.playerSavings) {
 			$( ".tower" ).addClass( "green" );
-		};
+		} else {
+			$( ".tower" ).removeClass( "green" );
+		}
+		if (($scope.complexPrice * 0.2) < $scope.playerSavings) {
+			$( ".complex" ).addClass( "green" );
+		} else {
+			$( ".complex" ).removeClass( "green" );
+		}
+		if (($scope.urbanPrice * 0.2) < $scope.playerSavings) {
+			$( ".urban" ).addClass( "green" );
+		} else {
+			$( ".urban" ).removeClass( "green" );
+		}
 
 		if ($scope.properties.length != 0) {
 			for (i=0; i<$scope.properties.length; i++) {
@@ -179,14 +192,15 @@ angular.module('game', [])
 					};
 				};
 
-				if ($scope.properties[i].cancel <= $scope.playerSavings) {
-					if ($scope.properties[i].cancel > 0) {
-						$scope.properties[i].colorCancel = "green";
-					} else {
-						$scope.properties[i].colorCancel = "none";
-					};
+				if (($scope.properties[i].cancel <= $scope.playerSavings) && ($scope.properties[i].cancel > 0)) {
+					$scope.properties[i].colorCancel = "green";
+				} else {
+					$scope.properties[i].colorCancel = "none";
+				};
 
-					gameData.cancel = function($index) {
+
+				gameData.cancel = function($index) {
+					if ($scope.properties[$index].cancel <= $scope.playerSavings) {
 						$scope.properties[$index].colorCancel = "none";
 						$scope.playerSavings-= $scope.properties[$index].cancel;
 						$scope.playerDebt-= $scope.properties[$index].mortgage;
@@ -194,7 +208,7 @@ angular.module('game', [])
 						$scope.properties[$index].cancel = 0;
 						$scope.properties[$index].monthlyPayment = 0;
 					};
-				}		
+				};		
 
 				if ($scope.properties[i].devaluation > 12) {
 					$scope.properties[i].colorSell = "green";

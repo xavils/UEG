@@ -1,56 +1,71 @@
-<!-- Studio 100K, 2 Bedroom apt 200K, Villa 500K, Penthouse 1M, Apartment Block 2M, Residential Tower 5M -->
-<!-- Start with 38K. Can ask the bank 5X more than you have. So you can start buying 1 studio that will give you in return 600/month (10sec). You repay the bank in 40 years at an interest of 3% yearly (365/month). House and rent appreciates 7%/year decreasing to 0% raise after 15 years where you can spend 25% of house value to refurbish it.
-
-40 seconds to buy 2nd house.
-215 seconds to buy 3rd house.
-
-Name: House;
-Units: 1;
-Price: 100000;
-Rent: 600;
-Mortgage: 365;
-Cancel Mortgage: 80000;
-Mortgage Total: 
-Cancel Mortgagr button;
-Buy house button;
-Sell house button;
-Refurbish house button; -->
-
 <!DOCTYPE html>
-<html ng-app="game">
+<html ng-app="game" lang="en">
 <head>
+	<!-- Basic Page Needs
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<meta charset="utf-8">
 	<title>unReal Estate</title>
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<meta name="description" content="">
+	<meta name="author" content="Xavi Lozano Segarra">
+
+	<!-- Mobile Specific Metas
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- FONT
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+	<!-- CSS
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<link rel="stylesheet" href="Skeleton/normalize.css">
+	<link rel="stylesheet" href="Skeleton/skeleton.css">
+	<!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- Favicon
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<!-- <link rel="icon" type="image/png" href="images/favicon.png"> -->
 </head>
 <body>
 	<div class="container" ng-controller="gameController as gameData">
 		<div class="row">
-			<div class="col-sm-3">
+			<div class="twelve columns">
 				<p>{{date}}</p>
 				<h1>Player</h1>
 				<p>Savings: $<span>{{playerSavings}}</span></p>
 				<p>Debts: $<span>{{playerDebt}}</span></p>	
+				<button ng-click="gameData.buy(studioPrice, studio)" class="studio green">Studio - ${{studioPrice}}</button>
+				<button ng-click="gameData.buy(flatPrice, apartment)" class="flat">Apartment - ${{flatPrice}}</button>
+				<button ng-click="gameData.buy(penthousePrice, penthouse)" class="penthouse">Penthouse - ${{penthousePrice}}</button>
+				<button ng-click="gameData.buy(villaPrice, villa)" class="villa">Villa - ${{villaPrice}}</button>
+				<button ng-click="gameData.buy(blockPrice, block)" class="block">Block - ${{blockPrice}}</button>
+				<button ng-click="gameData.buy(towerPrice, tower)" class="tower">Tower - ${{towerPrice}}</button>
+				<button ng-click="gameData.buy(complexPrice, complex)" class="complex">Tower Complex - ${{complexPrice}}</button>
+				<button ng-click="gameData.buy(urbanPrice, urban)" class="urban">Urban Plan - ${{urbanPrice}}</button>
 			</div>
-			<div class="col-sm-3">
-				<button ng-click="gameData.buy(studioPrice, studio)" class="studio green">Buy Studio - ${{studioPrice}}</button>
-				<button ng-click="gameData.buy(flatPrice, apartment)" class="flat">Buy Apartment - ${{flatPrice}}</button>
-				<button ng-click="gameData.buy(penthousePrice, penthouse)" class="penthouse">Buy Penthouse - ${{penthousePrice}}</button>
-				<button ng-click="gameData.buy(villaPrice, villa)" class="villa">Buy Villa - ${{villaPrice}}</button>
-				<button ng-click="gameData.buy(blockPrice, block)" class="block">Buy Block - ${{blockPrice}}</button>
-				<button ng-click="gameData.buy(towerPrice, tower)" class="tower">Buy Tower - ${{towerPrice}}</button>
-			</div>
-			
-		</div>
-		<div class="row playerProperties">
-			<div ng-repeat="property in properties" class="col-xs-6 col-sm-3">
-				<p>{{property.propertyIs}}</p>
-				<p>Rent: {{property.rent}}</p>
-				<p>Mortage: {{property.monthlyPayment}}</p>
-	          	<button ng-click="gameData.sell($index)" class="sell {{property.colorSell}}">Sell - ${{property.totalPrice}}</button>
-				<button ng-click="gameData.cancel($index)" class="cancel {{property.colorCancel}}">Cancel Mortgage - ${{property.cancel}}</button>
-				<button ng-click="gameData.refurbish($index)" class="refurbish {{property.colorRefurbish}}">Refurbish - ${{property.refurbish}}</button>
-	        </div>
+			<div class="twelve columns">
+				<table class="u-full-width">
+					<thead>
+						<tr>
+							<th>PROPERTY TYPE</th>
+							<th>SELL PROPERTY</th>
+							<th>CANCEL MORTGAGE</th>
+							<th>REFURBISH COST</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="property in properties">
+							<td>{{property.propertyIs}}</td>
+							<!-- <p>Rent: {{property.rent}}</p> -->
+							<!-- <p>Mortage: {{property.monthlyPayment}}</p> -->
+				          	<td><a ng-click="gameData.sell($index)" class="sell {{property.colorSell}}">${{property.totalPrice}}</a></td>
+							<td><a ng-click="gameData.cancel($index)" class="cancel {{property.colorCancel}}">${{property.cancel}}</a></td>
+							<td><a ng-click="gameData.refurbish($index)" class="refurbish {{property.colorRefurbish}}">${{property.refurbish}}</a></td>
+				        </tr>
+					</tbody>
+			    </table>
+		    </div>
 		</div>
 	</div>
 

@@ -1,3 +1,26 @@
-.green {
-	background-color: lightgreen;
+body {
+	text-align: center;
+}
+th, td {
+	text-align: center;
+}
+a {
+	color: grey;
+	cursor: pointer;
+}
+a:hover {
+	color: grey;
+}
+a.green {
+	color: #419C57;
+	font-weight: 600;
+	text-decoration: underline;
+}
+button.green {
+	background-color: #419C57;
+	color: white;
+	border-color: #419C57;
+}
+button.green:hover {
+	opacity: 0.8;
 }
