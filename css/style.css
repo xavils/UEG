@@ -1,5 +1,10 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 body {
 	text-align: center;
+	padding-top: 20px;
 }
 th, td {
 	text-align: center;
@@ -24,3 +29,52 @@ button.green {
 button.green:hover {
 	opacity: 0.8;
 }
+.BOOM {
+	background-color: #419C57;
+	color: white;
+	border-color: #419C57;
+	border-radius: 4px;
+	padding: 8px 30px;
+	display: inline-block;
+}
+.RECESSION {
+	background-color: #E05263;
+	color: white;
+	border-color: #E05263;
+	border-radius: 4px;
+	padding: 8px 30px;
+	display: inline-block;
+}
+.theNumber {
+	font-size: 100px;
+	line-height: 70px;
+}
+h1 {
+	text-decoration: underline;
+}
+.economicData {
+	border: 1px dashed grey;
+	padding-top: 30px;
+}
+.economicData p {
+	margin-bottom: 15px;
+}
+.economicData .BOOM, .economicData .RECESSION {
+	margin-bottom: 30px;
+}
+.howToPlay, .gameData, .propertyList {
+	margin: 15px 0;
+}
+
+@media (max-width: 1125px) {
+	.six.columns {
+	    width: 100%;
+	}
+	.clickToBuy {
+		margin-left: 0;
+	}
+	.economicData {
+		margin-bottom: 30px;
+	}
+}
+
