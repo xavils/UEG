@@ -115,7 +115,7 @@ angular.module('game', [])
 			if ($scope.netWorth > 1000000000) {
 				$scope.gameOver = "Congrats. You are richer than Richie Rich!";
 			} else {
-				$scope.gameOver = "Game Over! You are dead and failed to become filthy rich.;
+				$scope.gameOver = "Game Over! You are dead and failed to become filthy rich.";
 			}
 
 			return
