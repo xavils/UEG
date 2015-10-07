@@ -112,11 +112,11 @@ angular.module('game', [])
 			$('.gameData').hide();
 			$('.gameOver').show();
 
-			// if () {
-			// 	$scope.gameOver = ;
-			// } else {
-			// 	$scope.gameOver = ;
-			// }
+			if ($scope.netWorth > 1000000000) {
+				$scope.gameOver = "Congrats. You are richer than Richie Rich!";
+			} else {
+				$scope.gameOver = "Game Over! You are dead and failed to become filthy rich.;
+			}
 
 			return
 		}
