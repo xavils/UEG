@@ -38,6 +38,8 @@ angular.module('game', [])
 	$scope.totalRent = 0;
 	$scope.totalMonthlyMortgage = 0;
 	$scope.properties = [];
+
+	// Game initial settings
 	$('.propertyList').hide();
 	$('.gameOver').hide();
 	$scope.currentSpeed = 100;
@@ -49,13 +51,16 @@ angular.module('game', [])
 		$scope.gameOver = "Game Over! You are dead and failed to become filthy rich.";
 	}
 
+	// Buy 1 property actions
 	gameData.buy = function(propertyType, stringType) {
+		// Gather propertyType data from click
 		$scope.generalTotalPrice = propertyType;
 		$scope.moneyNeeded = Math.round($scope.generalTotalPrice * 0.2);
-		$scope.typeString = stringType
+		$scope.typeString = stringType;
 
+		// Make sure player can actually buy
 		if (($scope.moneyNeeded <= $scope.playerSavings) && ($scope.properties.length < 15)) {
-
+			// Add new property to properties[]
 			$scope.properties.push({
 				propertyIs: $scope.typeString,
 				totalPrice: $scope.generalTotalPrice,
@@ -71,30 +76,29 @@ angular.module('game', [])
 				colorRefurbish: "none"
 			})
 
+			// Update player data
 			$scope.playerSavings-= Math.round($scope.generalTotalPrice * 0.2);
 			$scope.playerDebt+= Math.round(($scope.generalTotalPrice * 0.8 * 1.2) + $scope.generalTotalPrice * 0.8);
 
+			// Start the game / time function
 			if (year == 1999) {
 				setTimeout(month, $scope.currentSpeed);
 				$('.howToPlay').hide();
 				$('.propertyList').show();
 			}
+
+			// If player had sold all properties, restart the propertyStatus function
 			if ($scope.properties.length == 1) {
 				setTimeout(propertyStatus, $scope.currentSpeed);
 			}
 		}
 	};
 
-	// Function to update calendar and general market price
+	// Update calendar and general market price
 	function month() {
-		if ((year % 100 <= 10) || ((year % 100 < 25) && (year % 100 > 15)) || ((year % 100 < 40) && (year % 100 > 30)) || ((year % 100 < 55) && (year % 100 > 45)) || ((year % 100 < 70) && (year % 100 > 60)) || ((year % 100 < 85) && (year % 100 > 75)) || year % 100 > 90) {
-			$scope.recession = 0.0035;
-			$scope.recessionStatus = "BOOM";
-		} else {
-			$scope.recession = -0.0045;
-			$scope.recessionStatus = "RECESSION";
-		}
+		boomRecession();
 
+		// Update properties market price
 		$scope.$apply(function(){
 			$scope.studioPrice = Math.round($scope.studioPrice + $scope.studioPrice * $scope.recession);
 			$scope.flatPrice = Math.round($scope.flatPrice + $scope.flatPrice * $scope.recession);
@@ -106,19 +110,22 @@ angular.module('game', [])
 			$scope.urbanPrice = Math.round($scope.urbanPrice + $scope.urbanPrice * $scope.recession);
 		});
 
+		// +1 Year
 		if (counter%12 == 0) {
 			year+= 1;
 			counter = 0;
 		}
 
+		// Update date and apply savings interest
 		$scope.$apply(function(){
 			$scope.date = monthArray[counter] + " " + year;
 			$scope.playerSavings+= Math.round($scope.playerSavings * 0.001);
 		});
 
+		// End the game
 		if (year == 2100) {
 			$('.propertyList').hide();
-			$('.gameData').hide();
+			$('.gamingData').hide();
 			$('.gameOver').show();
 
 			return
@@ -128,16 +135,20 @@ angular.module('game', [])
 		setTimeout(month, $scope.currentSpeed);
 	};
 
+	// Real-time update all game money data
 	function propertyStatus() {
+		// Data freeze on game over
 		if (year == 2100) {
 			return;
 		}
 
+		// Refresh monthly data
 		$scope.totalMortgage = 0;
 		$scope.totalPropertiesPrice = 0;
 		$scope.totalRent = 0;
 		$scope.totalMonthlyMortgage = 0;
 
+		// Manage button color
 		if ($scope.properties.length < 15) {
 			if (($scope.studioPrice * 0.2) < $scope.playerSavings) {
 				$( ".studio" ).addClass( "green" );
@@ -190,34 +201,39 @@ angular.module('game', [])
 			$( ".urban" ).removeClass( "green" );
 		};
 		
-
+		// Run if the player owns properties
 		if ($scope.properties.length != 0) {
+			// Run through all properties
 			for (i=0; i<$scope.properties.length; i++) {
+				// Unconditional property data
 				$scope.properties[i].marketPrice = Math.round($scope.properties[i].marketPrice + ($scope.properties[i].marketPrice * $scope.recession));
 				$scope.totalPropertiesPrice+= $scope.properties[i].marketPrice;
 				$scope.totalRent+= $scope.properties[i].rent;
 				$scope.totalMonthlyMortgage+= $scope.properties[i].monthlyPayment;
 				$scope.properties[i].devaluation +=1;
+				$scope.properties[i].refurbish = Math.round($scope.properties[i].marketPrice * 0.2);
 
+				// Adjust property devaluation after 15 years
 				if ($scope.properties[i].devaluation > 179) {
 					$scope.properties[i].totalPrice = Math.round($scope.properties[i].totalPrice + ($scope.properties[i].totalPrice * $scope.recession));
 				} else {
 					$scope.properties[i].totalPrice = Math.round($scope.properties[i].totalPrice + $scope.properties[i].totalPrice * ($scope.recession - ($scope.properties[i].devaluation / 450 * $scope.recession)));
 				}
-
-				$scope.properties[i].refurbish = Math.round($scope.properties[i].marketPrice * 0.2);
-
+				
+				// Adjust cancel mortgage price or keep it at 0
 				if ($scope.properties[i].cancel > 0) {
 					$scope.properties[i].cancel-= Math.round($scope.properties[i].monthlyPayment * 0.45);
 					$scope.totalMortgage+= $scope.properties[i].mortgage;
 				} else {
-					$scope.properties[i].cancel = 0;
+					$scope.properties[i].cancel = "0 - Mortgage free";
 				}
 
+				// Increase rent every year
 				if ($scope.properties[i].devaluation%12 == 0) {
 					$scope.properties[i].rent = Math.round($scope.properties[i].totalPrice / 165);
 				}
 
+				// Make sure player debt doesn't become negative. Add and deduct rent and mortgage from savings and debt
 				if ($scope.playerDebt > 0) {
 					$scope.properties[i].mortgage-= $scope.properties[i].monthlyPayment;
 					$scope.playerSavings+= $scope.properties[i].rent;
@@ -228,6 +244,7 @@ angular.module('game', [])
 					$scope.playerSavings+= $scope.properties[i].rent;
 				}
 
+				// Every 15 years the player can refurbish the property if he has enough savings
 				if ($scope.properties[i].refurbish <= $scope.playerSavings && $scope.properties[i].devaluation > 179) {
 					$scope.properties[i].colorRefurbish = "green";
 
@@ -239,13 +256,14 @@ angular.module('game', [])
 					};
 				};
 
+				// If there is a mortgage to pay and enough savings make the cancel button green
 				if (($scope.properties[i].cancel <= $scope.playerSavings) && ($scope.properties[i].cancel > 0)) {
 					$scope.properties[i].colorCancel = "green";
 				} else {
 					$scope.properties[i].colorCancel = "none";
 				};
 
-
+				// Cancel the mortgage
 				gameData.cancel = function($index) {
 					if ($scope.properties[$index].cancel <= $scope.playerSavings) {
 						$scope.properties[$index].colorCancel = "none";
@@ -257,10 +275,10 @@ angular.module('game', [])
 					};
 				};		
 
+				// After one year of owning the property, the player can sell it
 				if ($scope.properties[i].devaluation > 12) {
 					$scope.properties[i].colorSell = "green";
 				};
-
 				gameData.sell = function($index) {
 					if ($scope.properties[$index].devaluation > 12) {
 						$scope.playerSavings+= $scope.properties[$index].totalPrice - $scope.properties[$index].cancel;
@@ -270,12 +288,14 @@ angular.module('game', [])
 				};				
 			}
 			
+			// The score
 			$scope.netWorth = $scope.playerSavings - $scope.totalMortgage + $scope.totalPropertiesPrice;
 
 			setTimeout(propertyStatus, $scope.currentSpeed);
     	}
 	};
 
+	// Set the game speed
 	gameData.speed = function() {
 		if ($scope.currentSpeed == 100) {
 			$scope.currentSpeed = 1000;
@@ -285,4 +305,15 @@ angular.module('game', [])
 			$scope.currentSpeed = 100;
 		}
 	};
+
+	// Set the economic cycle
+	function boomRecession() {
+		if ((year % 100 <= 10) || ((year % 100 < 25) && (year % 100 > 15)) || ((year % 100 < 40) && (year % 100 > 30)) || ((year % 100 < 55) && (year % 100 > 45)) || ((year % 100 < 70) && (year % 100 > 60)) || ((year % 100 < 85) && (year % 100 > 75)) || year % 100 > 90) {
+			$scope.recession = 0.0035;
+			$scope.recessionStatus = "BOOM";
+		} else {
+			$scope.recession = -0.0045;
+			$scope.recessionStatus = "RECESSION";
+		}
+	}	
 }]);
