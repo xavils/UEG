@@ -12,7 +12,7 @@ angular.module('game', [])
 	$scope.date = currentMonth + " " + year;
 	$scope.recessionStatus = "BOOM";
 
-	// Initial data
+	// Initial property data
 	$scope.studioPrice = 100000;
 	$scope.flatPrice = 200000;
 	$scope.penthousePrice = 500000;
@@ -22,14 +22,14 @@ angular.module('game', [])
 	$scope.complexPrice = 15000000;
 	$scope.urbanPrice = 50000000;
 
-	$scope.studio = "studio";
-	$scope.apartment = "apartment";
-	$scope.penthouse = "penthouse";
-	$scope.villa = "villa";
-	$scope.block = "block";
-	$scope.tower = "tower";
-	$scope.complex = "complex";
-	$scope.urban = "urban";
+	$scope.studio = "STUDIO";
+	$scope.apartment = "APARTMENT";
+	$scope.penthouse = "PENTHOUSE";
+	$scope.villa = "VILLA";
+	$scope.block = "BLOCK";
+	$scope.tower = "TOWER";
+	$scope.complex = "COMPLEX";
+	$scope.urban = "TOWN";
 	
 	// Player initial data
 	$scope.playerSavings = 38000;
@@ -40,7 +40,14 @@ angular.module('game', [])
 	$scope.properties = [];
 	$('.propertyList').hide();
 	$('.gameOver').hide();
+	$scope.currentSpeed = 100;
 
+	// Game over message
+	if ($scope.netWorth > 1000000000) {
+		$scope.gameOver = "Congrats. You are richer than Richie Rich!";
+	} else {
+		$scope.gameOver = "Game Over! You are dead and failed to become filthy rich.";
+	}
 
 	gameData.buy = function(propertyType, stringType) {
 		$scope.generalTotalPrice = propertyType;
@@ -68,12 +75,12 @@ angular.module('game', [])
 			$scope.playerDebt+= Math.round(($scope.generalTotalPrice * 0.8 * 1.2) + $scope.generalTotalPrice * 0.8);
 
 			if (year == 1999) {
-				setTimeout(month,500);
+				setTimeout(month, $scope.currentSpeed);
 				$('.howToPlay').hide();
 				$('.propertyList').show();
 			}
 			if ($scope.properties.length == 1) {
-				setTimeout(propertyStatus,500);
+				setTimeout(propertyStatus, $scope.currentSpeed);
 			}
 		}
 	};
@@ -114,17 +121,11 @@ angular.module('game', [])
 			$('.gameData').hide();
 			$('.gameOver').show();
 
-			if ($scope.netWorth > 1000000000) {
-				$scope.gameOver = "Congrats. You are richer than Richie Rich!";
-			} else {
-				$scope.gameOver = "Game Over! You are dead and failed to become filthy rich.";
-			}
-
 			return
 		}
 
 		counter +=1;
-		setTimeout(month, 500);
+		setTimeout(month, $scope.currentSpeed);
 	};
 
 	function propertyStatus() {
@@ -137,46 +138,58 @@ angular.module('game', [])
 		$scope.totalRent = 0;
 		$scope.totalMonthlyMortgage = 0;
 
-		if (($scope.studioPrice * 0.2) < $scope.playerSavings) {
-			$( ".studio" ).addClass( "green" );
+		if ($scope.properties.length < 15) {
+			if (($scope.studioPrice * 0.2) < $scope.playerSavings) {
+				$( ".studio" ).addClass( "green" );
+			} else {
+				$( ".studio" ).removeClass( "green" );
+			}
+			if (($scope.flatPrice * 0.2) < $scope.playerSavings) {
+				$( ".flat" ).addClass( "green" );
+			} else {
+				$( ".flat" ).removeClass( "green" );
+			}
+			if (($scope.penthousePrice * 0.2) < $scope.playerSavings) {
+				$( ".penthouse" ).addClass( "green" );
+			} else {
+				$( ".penthouse" ).removeClass( "green" );
+			}
+			if (($scope.villaPrice * 0.2) < $scope.playerSavings) {
+				$( ".villa" ).addClass( "green" );
+			} else {
+				$( ".villa" ).removeClass( "green" );
+			}
+			if (($scope.blockPrice * 0.2) < $scope.playerSavings) {
+				$( ".block" ).addClass( "green" );
+			} else {
+				$( ".block" ).removeClass( "green" );
+			}
+			if (($scope.towerPrice * 0.2) < $scope.playerSavings) {
+				$( ".tower" ).addClass( "green" );
+			} else {
+				$( ".tower" ).removeClass( "green" );
+			}
+			if (($scope.complexPrice * 0.2) < $scope.playerSavings) {
+				$( ".complex" ).addClass( "green" );
+			} else {
+				$( ".complex" ).removeClass( "green" );
+			}
+			if (($scope.urbanPrice * 0.2) < $scope.playerSavings) {
+				$( ".urban" ).addClass( "green" );
+			} else {
+				$( ".urban" ).removeClass( "green" );
+			}
 		} else {
 			$( ".studio" ).removeClass( "green" );
-		}
-		if (($scope.flatPrice * 0.2) < $scope.playerSavings) {
-			$( ".flat" ).addClass( "green" );
-		} else {
 			$( ".flat" ).removeClass( "green" );
-		}
-		if (($scope.penthousePrice * 0.2) < $scope.playerSavings) {
-			$( ".penthouse" ).addClass( "green" );
-		} else {
 			$( ".penthouse" ).removeClass( "green" );
-		}
-		if (($scope.villaPrice * 0.2) < $scope.playerSavings) {
-			$( ".villa" ).addClass( "green" );
-		} else {
 			$( ".villa" ).removeClass( "green" );
-		}
-		if (($scope.blockPrice * 0.2) < $scope.playerSavings) {
-			$( ".block" ).addClass( "green" );
-		} else {
 			$( ".block" ).removeClass( "green" );
-		}
-		if (($scope.towerPrice * 0.2) < $scope.playerSavings) {
-			$( ".tower" ).addClass( "green" );
-		} else {
 			$( ".tower" ).removeClass( "green" );
-		}
-		if (($scope.complexPrice * 0.2) < $scope.playerSavings) {
-			$( ".complex" ).addClass( "green" );
-		} else {
 			$( ".complex" ).removeClass( "green" );
-		}
-		if (($scope.urbanPrice * 0.2) < $scope.playerSavings) {
-			$( ".urban" ).addClass( "green" );
-		} else {
 			$( ".urban" ).removeClass( "green" );
-		}
+		};
+		
 
 		if ($scope.properties.length != 0) {
 			for (i=0; i<$scope.properties.length; i++) {
@@ -259,7 +272,17 @@ angular.module('game', [])
 			
 			$scope.netWorth = $scope.playerSavings - $scope.totalMortgage + $scope.totalPropertiesPrice;
 
-			setTimeout(propertyStatus, 500);
+			setTimeout(propertyStatus, $scope.currentSpeed);
     	}
+	};
+
+	gameData.speed = function() {
+		if ($scope.currentSpeed == 100) {
+			$scope.currentSpeed = 1000;
+		} else if ($scope.currentSpeed == 1000) {
+			$scope.currentSpeed = 500;
+		} else {
+			$scope.currentSpeed = 100;
+		}
 	};
 }]);

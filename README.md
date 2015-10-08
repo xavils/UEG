@@ -1,8 +1,7 @@
 # UEG
 
-- speed
+- refactor js
+- mini numbers
 - save scores
 - music
-- refactor js
 - animations
-- mini numbers

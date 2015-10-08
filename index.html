@@ -48,8 +48,9 @@
 				</ul>
 		    </div>
 		</div>
-		<div class="row gameData">
+		<div class="row gamingData">
 			<div class="six columns economicData">
+				<button ng-click="gameData.speed()">Speed</button>
 				<p>Savings - ${{playerSavings}}</p>
 				<p>Debts - ${{playerDebt}}</p>
 				<p>Rent Income - ${{totalRent}}</p>
@@ -65,7 +66,7 @@
 				<button ng-click="gameData.buy(blockPrice, block)" class="block">Block - ${{blockPrice}}</button>
 				<button ng-click="gameData.buy(towerPrice, tower)" class="tower">Tower - ${{towerPrice}}</button>
 				<button ng-click="gameData.buy(complexPrice, complex)" class="complex">Complex - ${{complexPrice}}</button>
-				<button ng-click="gameData.buy(urbanPrice, urban)" class="urban">Urban Plan - ${{urbanPrice}}</button>
+				<button ng-click="gameData.buy(urbanPrice, urban)" class="urban">Town - ${{urbanPrice}}</button>
 			</div>
 		</div>
 		<div class="row propertyList">	
@@ -94,7 +95,7 @@
 		<div class="row gameOver">	
 			<div class="twelve columns">
 				<h2>{{gameOver}}</h2>
-	    </div>
+	    	</div>
 		</div>
 	</div>
 

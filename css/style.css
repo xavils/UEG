@@ -30,11 +30,11 @@ button.green:hover {
 	opacity: 0.8;
 }
 .BOOM {
-	background-color: #419C57;
+	background-color: #A1D490;
 	color: white;
-	border-color: #419C57;
+	border-color: #A1D490;
 	border-radius: 4px;
-	padding: 8px 30px;
+	padding: 7px 30px;
 	display: inline-block;
 }
 .RECESSION {
@@ -42,7 +42,7 @@ button.green:hover {
 	color: white;
 	border-color: #E05263;
 	border-radius: 4px;
-	padding: 8px 30px;
+	padding: 7px 30px;
 	display: inline-block;
 }
 .theNumber {
@@ -62,7 +62,7 @@ h1 {
 .economicData .BOOM, .economicData .RECESSION {
 	margin-bottom: 30px;
 }
-.howToPlay, .gameData, .propertyList {
+.howToPlay, .gamingData, .propertyList {
 	margin: 15px 0;
 }
 
