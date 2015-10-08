@@ -35,6 +35,8 @@ angular.module('game', [])
 	$scope.playerSavings = 38000;
 	$scope.playerDebt = 0;
 	$scope.netWorth = $scope.playerSavings - $scope.playerDebt;
+	$scope.totalRent = 0;
+	$scope.totalMonthlyMortgage = 0;
 	$scope.properties = [];
 	$('.propertyList').hide();
 	$('.gameOver').hide();
@@ -130,7 +132,6 @@ angular.module('game', [])
 			return;
 		}
 
-		$scope.netWorth = $scope.playerSavings - $scope.totalMortgage + $scope.totalPropertiesPrice;
 		$scope.totalMortgage = 0;
 		$scope.totalPropertiesPrice = 0;
 		$scope.totalRent = 0;
@@ -256,6 +257,8 @@ angular.module('game', [])
 				};				
 			}
 			
+			$scope.netWorth = $scope.playerSavings - $scope.totalMortgage + $scope.totalPropertiesPrice;
+
 			setTimeout(propertyStatus, 500);
     	}
 	};
