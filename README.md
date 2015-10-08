@@ -1,7 +1,7 @@
 # UEG
 
 - refactor js
-- mini numbers
+- mini numbers and cancel mortgage text
 - save scores
 - music
 - animations

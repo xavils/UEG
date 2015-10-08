@@ -44,13 +44,6 @@ angular.module('game', [])
 	$('.gameOver').hide();
 	$scope.currentSpeed = 100;
 
-	// Game over message
-	if ($scope.netWorth > 1000000000) {
-		$scope.gameOver = "Congrats. You are richer than Richie Rich!";
-	} else {
-		$scope.gameOver = "Game Over! You are dead and failed to become filthy rich.";
-	}
-
 	// Buy 1 property actions
 	gameData.buy = function(propertyType, stringType) {
 		// Gather propertyType data from click
@@ -120,6 +113,8 @@ angular.module('game', [])
 		$scope.$apply(function(){
 			$scope.date = monthArray[counter] + " " + year;
 			$scope.playerSavings+= Math.round($scope.playerSavings * 0.001);
+			// The score
+			$scope.netWorth = $scope.playerSavings - $scope.playerDebt + $scope.totalPropertiesPrice;
 		});
 
 		// End the game
@@ -128,7 +123,16 @@ angular.module('game', [])
 			$('.gamingData').hide();
 			$('.gameOver').show();
 
-			return
+			// Game over message
+			$scope.$apply(function(){
+				if ($scope.netWorth > 1000000000) {
+					$scope.gameOver = "Congrats. You are richer than Donald Trump!";
+				} else {
+					$scope.gameOver = "Game Over! You are dead and failed to become filthy rich.";
+				}
+			});
+
+			return;
 		}
 
 		counter +=1;
@@ -143,7 +147,6 @@ angular.module('game', [])
 		}
 
 		// Refresh monthly data
-		$scope.totalMortgage = 0;
 		$scope.totalPropertiesPrice = 0;
 		$scope.totalRent = 0;
 		$scope.totalMonthlyMortgage = 0;
@@ -217,15 +220,19 @@ angular.module('game', [])
 				if ($scope.properties[i].devaluation > 179) {
 					$scope.properties[i].totalPrice = Math.round($scope.properties[i].totalPrice + ($scope.properties[i].totalPrice * $scope.recession));
 				} else {
-					$scope.properties[i].totalPrice = Math.round($scope.properties[i].totalPrice + $scope.properties[i].totalPrice * ($scope.recession - ($scope.properties[i].devaluation / 450 * $scope.recession)));
+					if ($scope.recessionStatus == "BOOM") {
+						$scope.properties[i].totalPrice = Math.round($scope.properties[i].totalPrice + $scope.properties[i].totalPrice * ($scope.recession - ($scope.properties[i].devaluation / 450 * $scope.recession)));
+					} else {
+						$scope.properties[i].totalPrice = Math.round($scope.properties[i].totalPrice + $scope.properties[i].totalPrice * ($scope.recession + ($scope.properties[i].devaluation / 450 * $scope.recession)));
+					};
+					
 				}
 				
 				// Adjust cancel mortgage price or keep it at 0
 				if ($scope.properties[i].cancel > 0) {
 					$scope.properties[i].cancel-= Math.round($scope.properties[i].monthlyPayment * 0.45);
-					$scope.totalMortgage+= $scope.properties[i].mortgage;
 				} else {
-					$scope.properties[i].cancel = "0 - Mortgage free";
+					$scope.properties[i].cancel = 0;
 				}
 
 				// Increase rent every year
@@ -287,12 +294,9 @@ angular.module('game', [])
 					};
 				};				
 			}
-			
-			// The score
-			$scope.netWorth = $scope.playerSavings - $scope.totalMortgage + $scope.totalPropertiesPrice;
 
 			setTimeout(propertyStatus, $scope.currentSpeed);
-    	}
+  	} 
 	};
 
 	// Set the game speed
