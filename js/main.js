@@ -42,7 +42,7 @@ angular.module('game', [])
 	// Game initial settings
 	$('.propertyList').hide();
 	$('.gameOver').hide();
-	$scope.currentSpeed = 10;
+	$scope.currentSpeed = 100;
 
 	// Buy 1 property actions
 	gameData.buy = function(propertyType, stringType) {
