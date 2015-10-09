@@ -43,7 +43,6 @@ angular.module('game', [])
 	$('.propertyList').hide();
 	$('.gameOver').hide();
 	$scope.currentSpeed = 10;
-	$scope.highScore = "- No Data";
 
 	// Buy 1 property actions
 	gameData.buy = function(propertyType, stringType) {
@@ -124,8 +123,8 @@ angular.module('game', [])
 			$('.gamingData').hide();
 			$('.gameOver').show();
 
-			// Game over message
 			$scope.$apply(function(){
+				// Game over message
 				if ($scope.netWorth > 1000000000) {
 					$scope.gameOver = "Congrats. You are richer than Donald Trump!";
 				} else if ($scope.netWorth < 1000000) {
@@ -134,10 +133,9 @@ angular.module('game', [])
 					$scope.gameOver = "Game Over! You are dead and failed to become filthy rich.";
 				}
 
-				if ($scope.netWorth > Number(localStorage.highScore)) {
-		    	// Store
+				// Store highscore
+				if ($scope.netWorth > Number(localStorage.highScore) || typeof localStorage.highScore === 'undefined') {
 		    	localStorage.highScore = $scope.netWorth;
-		    	// Retrieve
 		    	$scope.highScore = localStorage.getItem("highScore");
 		    } else {
 		    	$scope.highScore = localStorage.getItem("highScore");
