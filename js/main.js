@@ -4,45 +4,49 @@ angular.module('game', [])
   function($scope) {
 	var gameData = this;
 
-	// Calendar
-	var counter = 0;
-	var year = 1999;
-	var currentMonth = "December";
-	var monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-	$scope.date = currentMonth + " " + year;
-	$scope.recessionStatus = "BOOM";
+	$( document ).ready(startGameData());
 
-	// Initial property data
-	$scope.studioPrice = 100000;
-	$scope.flatPrice = 200000;
-	$scope.penthousePrice = 500000;
-	$scope.villaPrice = 1000000;
-	$scope.blockPrice = 2000000;
-	$scope.towerPrice = 5000000;
-	$scope.complexPrice = 15000000;
-	$scope.urbanPrice = 50000000;
+	function startGameData() {
+		// Calendar
+		$scope.counter = 0;
+		$scope.year = 1999;
+		$scope.currentMonth = "December";
+		$scope.monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		$scope.date = $scope.currentMonth + " " + $scope.year;
+		$scope.recessionStatus = "BOOM";
 
-	$scope.studio = "STUDIO";
-	$scope.apartment = "APARTMENT";
-	$scope.penthouse = "PENTHOUSE";
-	$scope.villa = "VILLA";
-	$scope.block = "BLOCK";
-	$scope.tower = "TOWER";
-	$scope.complex = "COMPLEX";
-	$scope.urban = "TOWN";
-	
-	// Player initial data
-	$scope.playerSavings = 38000;
-	$scope.playerDebt = 0;
-	$scope.netWorth = $scope.playerSavings - $scope.playerDebt;
-	$scope.totalRent = 0;
-	$scope.totalMonthlyMortgage = 0;
-	$scope.properties = [];
+		// Initial property data
+		$scope.studioPrice = 100000;
+		$scope.flatPrice = 200000;
+		$scope.penthousePrice = 500000;
+		$scope.villaPrice = 1000000;
+		$scope.blockPrice = 2000000;
+		$scope.towerPrice = 5000000;
+		$scope.complexPrice = 15000000;
+		$scope.urbanPrice = 50000000;
 
-	// Game initial settings
-	$('.propertyList').hide();
-	$('.gameOver').hide();
-	$scope.currentSpeed = 10;
+		$scope.studio = "STUDIO";
+		$scope.apartment = "APARTMENT";
+		$scope.penthouse = "PENTHOUSE";
+		$scope.villa = "VILLA";
+		$scope.block = "BLOCK";
+		$scope.tower = "TOWER";
+		$scope.complex = "COMPLEX";
+		$scope.urban = "TOWN";
+		
+		// Player initial data
+		$scope.playerSavings = 38000;
+		$scope.playerDebt = 0;
+		$scope.netWorth = $scope.playerSavings - $scope.playerDebt;
+		$scope.totalRent = 0;
+		$scope.totalMonthlyMortgage = 0;
+		$scope.properties = [];
+
+		// Game initial settings
+		$('.propertyList').hide();
+		$('.gameOver').hide();
+		$scope.currentSpeed = 10;
+	}
 
 	// Buy 1 property actions
 	gameData.buy = function(propertyType, stringType) {
@@ -74,7 +78,7 @@ angular.module('game', [])
 			$scope.playerDebt+= Math.round(($scope.generalTotalPrice * 0.8 * 1.2) + $scope.generalTotalPrice * 0.8);
 
 			// Start the game / time function
-			if (year == 1999) {
+			if ($scope.year == 1999) {
 				setTimeout(month, $scope.currentSpeed);
 				$('.howToPlay').hide();
 				$('.propertyList').show();
@@ -104,21 +108,21 @@ angular.module('game', [])
 		});
 
 		// +1 Year
-		if (counter%12 == 0) {
-			year+= 1;
-			counter = 0;
+		if ($scope.counter%12 == 0) {
+			$scope.year+= 1;
+			$scope.counter = 0;
 		}
 
 		// Update date and apply savings interest
 		$scope.$apply(function(){
-			$scope.date = monthArray[counter] + " " + year;
+			$scope.date = $scope.monthArray[$scope.counter] + " " + $scope.year;
 			$scope.playerSavings+= Math.round($scope.playerSavings * 0.001);
 			// The score
 			$scope.netWorth = $scope.playerSavings - $scope.playerDebt + $scope.totalPropertiesPrice;
 		});
 
 		// End the game
-		if (year == 2100) {
+		if ($scope.year == 2100) {
 			$('.propertyList').hide();
 			$('.gamingData').hide();
 			$('.gameOver').show();
@@ -147,14 +151,14 @@ angular.module('game', [])
 			return;
 		}
 
-		counter +=1;
+		$scope.counter +=1;
 		setTimeout(month, $scope.currentSpeed);
 	};
 
 	// Real-time update all game money data
 	function propertyStatus() {
 		// Data freeze on game over
-		if (year == 2100) {
+		if ($scope.year == 2100) {
 			return;
 		}
 
@@ -324,7 +328,7 @@ angular.module('game', [])
 
 	// Set the economic cycle
 	function boomRecession() {
-		if ((year % 100 <= 10) || ((year % 100 < 25) && (year % 100 > 15)) || ((year % 100 < 40) && (year % 100 > 30)) || ((year % 100 < 55) && (year % 100 > 45)) || ((year % 100 < 70) && (year % 100 > 60)) || ((year % 100 < 85) && (year % 100 > 75)) || year % 100 > 90) {
+		if (($scope.year % 100 <= 10) || (($scope.year % 100 < 25) && ($scope.year % 100 > 15)) || (($scope.year % 100 < 40) && ($scope.year % 100 > 30)) || (($scope.year % 100 < 55) && ($scope.year % 100 > 45)) || (($scope.year % 100 < 70) && ($scope.year % 100 > 60)) || (($scope.year % 100 < 85) && ($scope.year % 100 > 75)) || $scope.year % 100 > 90) {
 			$scope.recession = 0.0035;
 			$scope.recessionStatus = "BOOM";
 		} else {
@@ -333,7 +337,7 @@ angular.module('game', [])
 		}
 	}
 
-	// Share tweet
+	// Tweet your score
 	function twitter() {
 		window.twttr = (function(d, s, id) {
 		  var js, fjs = d.getElementsByTagName(s)[0],
@@ -351,5 +355,20 @@ angular.module('game', [])
 		 
 		  return t;
 		}(document, "script", "twitter-wjs"));
-	}	
+	}
+
+	// Restart the game
+	gameData.restart = function() {
+		startGameData();
+
+		$('.howToPlay').show();
+		$('.gamingData').show();		
+		$( ".flat" ).removeClass( "green" );
+		$( ".penthouse" ).removeClass( "green" );
+		$( ".villa" ).removeClass( "green" );
+		$( ".block" ).removeClass( "green" );
+		$( ".tower" ).removeClass( "green" );
+		$( ".complex" ).removeClass( "green" );
+		$( ".urban" ).removeClass( "green" );
+	}
 }]);
