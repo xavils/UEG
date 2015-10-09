@@ -64,6 +64,10 @@ h1 {
 .howToPlay, .gamingData, .propertyList {
 	margin: 15px 0;
 }
+.twitter-share-button {
+	display: block;
+	margin: 20px auto;
+}
 
 @media (max-width: 1125px) {
 	.six.columns {

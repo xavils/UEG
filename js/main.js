@@ -42,7 +42,7 @@ angular.module('game', [])
 	// Game initial settings
 	$('.propertyList').hide();
 	$('.gameOver').hide();
-	$scope.currentSpeed = 100;
+	$scope.currentSpeed = 10;
 
 	// Buy 1 property actions
 	gameData.buy = function(propertyType, stringType) {
@@ -140,6 +140,8 @@ angular.module('game', [])
 		    } else {
 		    	$scope.highScore = localStorage.getItem("highScore");
 		    }
+
+		    twitter();
 			});
 
 			return;
@@ -329,5 +331,25 @@ angular.module('game', [])
 			$scope.recession = -0.0045;
 			$scope.recessionStatus = "RECESSION";
 		}
+	}
+
+	// Share tweet
+	function twitter() {
+		window.twttr = (function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0],
+		    t = window.twttr || {};
+		  if (d.getElementById(id)) return t;
+		  js = d.createElement(s);
+		  js.id = id;
+		  js.src = "https://platform.twitter.com/widgets.js";
+		  fjs.parentNode.insertBefore(js, fjs);
+		 
+		  t._e = [];
+		  t.ready = function(f) {
+		    t._e.push(f);
+		  };
+		 
+		  return t;
+		}(document, "script", "twitter-wjs"));
 	}	
 }]);

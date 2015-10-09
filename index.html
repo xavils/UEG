@@ -5,8 +5,8 @@
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<meta charset="utf-8">
 	<title>unReal Estate</title>
-	<meta name="description" content="">
-	<meta name="author" content="Xavi Lozano Segarra">
+	<meta name="description" content="unReal Estate is the game where you become a real estate mogul!">
+	<meta name="author" content="xavils">
 
 	<!-- Mobile Specific Metas
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -51,22 +51,22 @@
 		<div class="row gamingData">
 			<div class="six columns economicData">
 				<button ng-click="gameData.speed()">Speed</button>
-				<p>Savings - ${{playerSavings}}</p>
-				<p>Debts - ${{playerDebt}}</p>
-				<p>Rent Income - ${{totalRent}}</p>
-				<p>Monthly Mortgage - ${{totalMonthlyMortgage}}</p>
+				<p>Savings ${{playerSavings}}</p>
+				<p>Debts ${{playerDebt}}</p>
+				<p>Rent Income ${{totalRent}}</p>
+				<p>Monthly Mortgage ${{totalMonthlyMortgage}}</p>
 				<p class="{{recessionStatus}}">{{recessionStatus}}</p>
 			</div>	
 			<div class="six columns clickToBuy">
 				<h3>Buy 1 property</h3>
-				<button ng-click="gameData.buy(studioPrice, studio)" class="studio green">Studio - ${{studioPrice}}</button>
-				<button ng-click="gameData.buy(flatPrice, apartment)" class="flat">Apartment - ${{flatPrice}}</button>
-				<button ng-click="gameData.buy(penthousePrice, penthouse)" class="penthouse">Penthouse - ${{penthousePrice}}</button>
-				<button ng-click="gameData.buy(villaPrice, villa)" class="villa">Villa - ${{villaPrice}}</button>
-				<button ng-click="gameData.buy(blockPrice, block)" class="block">Block - ${{blockPrice}}</button>
-				<button ng-click="gameData.buy(towerPrice, tower)" class="tower">Tower - ${{towerPrice}}</button>
-				<button ng-click="gameData.buy(complexPrice, complex)" class="complex">Complex - ${{complexPrice}}</button>
-				<button ng-click="gameData.buy(urbanPrice, urban)" class="urban">Town - ${{urbanPrice}}</button>
+				<button ng-click="gameData.buy(studioPrice, studio)" class="studio green">Studio ${{studioPrice}}</button>
+				<button ng-click="gameData.buy(flatPrice, apartment)" class="flat">Apartment ${{flatPrice}}</button>
+				<button ng-click="gameData.buy(penthousePrice, penthouse)" class="penthouse">Penthouse ${{penthousePrice}}</button>
+				<button ng-click="gameData.buy(villaPrice, villa)" class="villa">Villa ${{villaPrice}}</button>
+				<button ng-click="gameData.buy(blockPrice, block)" class="block">Block ${{blockPrice}}</button>
+				<button ng-click="gameData.buy(towerPrice, tower)" class="tower">Tower ${{towerPrice}}</button>
+				<button ng-click="gameData.buy(complexPrice, complex)" class="complex">Complex ${{complexPrice}}</button>
+				<button ng-click="gameData.buy(urbanPrice, urban)" class="urban">Town ${{urbanPrice}}</button>
 			</div>
 		</div>
 		<div class="row propertyList">	
@@ -96,6 +96,9 @@
 			<div class="twelve columns">
 				<h4>Highscore ${{highScore}}</h4>
 				<h2>{{gameOver}}</h2>
+				<button>Try again</button>
+				<a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I earned ${{netWorth}} at unReal Estate, a game where you become a real estate mogul! #UEGgame via @_xavils" data-size="large">Tweet</a>
+				<p>Created by <a href="http://xavils.com" target="_blank">xavils</a>, inspired by <a href="http://hyperhippo.ca/" target="_blank">Hyper Hippo's Ad Capitalist</a>.</p>
 	    	</div>
 		</div>
 	</div>
