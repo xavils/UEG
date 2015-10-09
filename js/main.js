@@ -46,7 +46,7 @@ angular.module('game', [])
 		$('.propertyList').hide();
 		$('.gameOver').hide();
 		$('.yUNo').hide();
-		$scope.currentSpeed = 10;
+		$scope.currentSpeed = 100;
 	}
 
 	// Buy 1 property actions
