@@ -68,6 +68,9 @@ h1 {
 	display: block;
 	margin: 20px auto;
 }
+.yUNo {
+	margin: 30px auto;
+}
 
 @media (max-width: 1125px) {
 	.six.columns {

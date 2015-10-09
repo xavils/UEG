@@ -45,6 +45,7 @@ angular.module('game', [])
 		// Game initial settings
 		$('.propertyList').hide();
 		$('.gameOver').hide();
+		$('.yUNo').hide();
 		$scope.currentSpeed = 10;
 	}
 
@@ -57,6 +58,9 @@ angular.module('game', [])
 
 		// Make sure player can actually buy
 		if (($scope.moneyNeeded <= $scope.playerSavings) && ($scope.properties.length < 15)) {
+			$('.yUNo').hide();
+			$('.propertyList').show();
+
 			// Add new property to properties[]
 			$scope.properties.push({
 				propertyIs: $scope.typeString,
@@ -121,13 +125,21 @@ angular.module('game', [])
 			$scope.netWorth = $scope.playerSavings - $scope.playerDebt + $scope.totalPropertiesPrice;
 		});
 
+
+		if ($scope.properties.length == 0) {
+			$('.propertyList').hide();
+			$('.yUNo').show();
+		}
+
 		// End the game
 		if ($scope.year == 2100) {
 			$('.propertyList').hide();
 			$('.gamingData').hide();
+			$('.yUNo').hide();
 			$('.gameOver').show();
 
 			$scope.$apply(function(){
+				$scope.netWorth;
 				// Game over message
 				if ($scope.netWorth > 1000000000) {
 					$scope.gameOver = "Congrats. You are richer than Donald Trump!";
@@ -144,8 +156,6 @@ angular.module('game', [])
 		    } else {
 		    	$scope.highScore = localStorage.getItem("highScore");
 		    }
-
-		    twitter();
 			});
 
 			return;
@@ -335,26 +345,6 @@ angular.module('game', [])
 			$scope.recession = -0.0045;
 			$scope.recessionStatus = "RECESSION";
 		}
-	}
-
-	// Tweet your score
-	function twitter() {
-		window.twttr = (function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0],
-		    t = window.twttr || {};
-		  if (d.getElementById(id)) return t;
-		  js = d.createElement(s);
-		  js.id = id;
-		  js.src = "https://platform.twitter.com/widgets.js";
-		  fjs.parentNode.insertBefore(js, fjs);
-		 
-		  t._e = [];
-		  t.ready = function(f) {
-		    t._e.push(f);
-		  };
-		 
-		  return t;
-		}(document, "script", "twitter-wjs"));
 	}
 
 	// Restart the game
