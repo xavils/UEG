@@ -424,7 +424,11 @@ angular.module('game', [])
     if ((""+value).length <= 4) {
     	return newValue;
 	  } else {
-	  	var suffixNum = Math.floor(((""+value).length - 1)/3);
+	  	if (value >= 0) {
+	  		var suffixNum = Math.floor(((""+value).length - 1)/3);
+	  	} else {
+	  		var suffixNum = Math.floor(((""+value).length - 2)/3);
+	  	}
 	  	var shortValue = (value/divide[suffixNum]).toPrecision(3);
 	  	newValue = "" + shortValue + suffixes[suffixNum];
 	  	return newValue;
