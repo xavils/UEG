@@ -32,16 +32,16 @@
 			<div class="twelve columns">
 				<h1>unReal Estate</h1>
 				<h4>{{date}}</h4>
-				<p>Net worth <span class="theNumber">${{netWorth}}</span></p>			
+				<p>Net worth <span class="theNumber">{{netWorthAbb}}</span></p>			
 			</div>
 		</div>
 		<div class="row howToPlay">	
 			<div class="twelve columns">
 				<h3>How to play</h3>
-				<p>Welcome to unReal Estate, the game where you become a real estate mogul! The goal of the game is to <b>become a billionare</b> (the richer the better) <b>before January 2100</b>. Your path of glory begins in december 1999 when you have saved enough dough to buy a small studio in the city center. You pay 20% of the cost and the bank will lend you the rest. This studio will provide a rent in return and you will also be paying mortgage until you repay the debt. <u>Beware of economic cycles as real estate will go up and down periodically.</u> The game will last 10-20 minutes.</p>
+				<p>Welcome to unReal Estate, the game where you become a real estate mogul! The goal of the game is to <b>become a billionare</b> (the richer the better) <b>before January 2100</b>. Your path of glory begins in december 1999 when you have saved enough dough to buy an apartment in Athens. You pay 20% of the cost and the bank will lend you the rest. This property will provide a rent in return and you will also be paying mortgage until you repay the debt. <u>Beware of economic cycles as real estate will go up and down periodically.</u> The game will last 10-20 minutes.</p>
 				<p><b>Actions you can perform:</b></p>
 				<ul>
-					<li>Once you have enough savings buy any kind of property to a max of 15 total.</li>
+					<li>Once you have enough savings buy an apartment to a max of 15 total.</li>
 					<li>After 1 year of owning a property you can sell it back to the market.</li>
 					<li>If you have enough savings, cancel your mortgage to avoid paying hefty interests.</li>
 					<li>Every 15 years you will be able to refurbish your property to avoid loosing value.</li>
@@ -51,22 +51,22 @@
 		<div class="row gamingData">
 			<div class="six columns economicData">
 				<button ng-click="gameData.speed()">Speed</button>
-				<p>Savings ${{playerSavings}}</p>
-				<p>Debts ${{playerDebt}}</p>
-				<p>Rent Income ${{totalRent}}</p>
-				<p>Monthly Mortgage ${{totalMonthlyMortgage}}</p>
+				<p>Savings ${{playerSavingsAbb}}</p>
+				<p>Debts ${{playerDebtAbb}}</p>
+				<p>Rent Income ${{totalRentAbb}}</p>
+				<p>Monthly Mortgage ${{totalMonthlyMortgageAbb}}</p>
 				<p class="{{recessionStatus}}">{{recessionStatus}}</p>
 			</div>	
 			<div class="six columns clickToBuy">
 				<h3>Buy 1 property</h3>
-				<button ng-click="gameData.buy(studioPrice, studio)" class="studio green">Studio ${{studioPrice}}</button>
-				<button ng-click="gameData.buy(flatPrice, apartment)" class="flat">Apartment ${{flatPrice}}</button>
-				<button ng-click="gameData.buy(penthousePrice, penthouse)" class="penthouse">Penthouse ${{penthousePrice}}</button>
-				<button ng-click="gameData.buy(villaPrice, villa)" class="villa">Villa ${{villaPrice}}</button>
-				<button ng-click="gameData.buy(blockPrice, block)" class="block">Block ${{blockPrice}}</button>
-				<button ng-click="gameData.buy(towerPrice, tower)" class="tower">Tower ${{towerPrice}}</button>
-				<button ng-click="gameData.buy(complexPrice, complex)" class="complex">Complex ${{complexPrice}}</button>
-				<button ng-click="gameData.buy(urbanPrice, urban)" class="urban">Town ${{urbanPrice}}</button>
+				<button ng-click="gameData.buy(athensPrice, athens)" class="athens green">athens ${{athensPriceAbb}}</button>
+				<button ng-click="gameData.buy(barcelonaPrice, barcelona)" class="barcelona">barcelona ${{barcelonaPriceAbb}}</button>
+				<button ng-click="gameData.buy(mumbaiPrice, mumbai)" class="mumbai">mumbai ${{mumbaiPriceAbb}}</button>
+				<button ng-click="gameData.buy(sydneyPrice, sydney)" class="sydney">sydney ${{sydneyPriceAbb}}</button>
+				<button ng-click="gameData.buy(parisPrice, paris)" class="paris">paris ${{parisPriceAbb}}</button>
+				<button ng-click="gameData.buy(newYorkPrice, newYork)" class="newYork">new york ${{newYorkPriceAbb}}</button>
+				<button ng-click="gameData.buy(londonPrice, london)" class="london">london ${{londonPriceAbb}}</button>
+				<button ng-click="gameData.buy(hongKongPrice, hongKong)" class="hongKong">hong kong ${{hongKongPriceAbb}}</button>
 			</div>
 		</div>
 		<div class="row propertyList">	
@@ -75,7 +75,7 @@
 				<table class="u-full-width">
 					<thead>
 						<tr>
-							<th>PROPERTY TYPE</th>
+							<th>CITY</th>
 							<th>SELL PROPERTY</th>
 							<th>CANCEL MORTGAGE</th>
 							<th>REFURBISH COST</th>
@@ -84,9 +84,9 @@
 					<tbody>
 						<tr ng-repeat="property in properties">
 							<td>{{property.propertyIs}}</td>
-	          	<td><a ng-click="gameData.sell($index)" class="sell {{property.colorSell}}">${{property.totalPrice}}</a></td>
-							<td><a ng-click="gameData.cancel($index)" class="cancel {{property.colorCancel}}">${{property.cancel}}</a></td>
-							<td><a ng-click="gameData.refurbish($index)" class="refurbish {{property.colorRefurbish}}">${{property.refurbish}}</a></td>
+	          	<td><a ng-click="gameData.sell($index)" class="sell {{property.colorSell}}">${{property.totalPriceAbb}}</a></td>
+							<td><a ng-click="gameData.cancel($index)" class="cancel {{property.colorCancel}}">{{property.cancelAbb}}</a></td>
+							<td><a ng-click="gameData.refurbish($index)" class="refurbish {{property.colorRefurbish}}">${{property.refurbishAbb}}</a></td>
 		        </tr>
 					</tbody>
 			    </table>
@@ -97,7 +97,7 @@
 		</div>
 		<div class="row gameOver">	
 			<div class="twelve columns">
-				<h4>Highscore ${{highScore}}</h4>
+				<h4>Highscore ${{highScoreAbb}}</h4>
 				<h2>{{gameOver}}</h2>
 				<button ng-click="gameData.restart()">Try again</button>
 				<a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Become filthy rich with unReal Estate, a game for real estate moguls! #UEGame&via=_xavils" data-size="large">Tweet</a>

@@ -16,37 +16,50 @@ angular.module('game', [])
 		$scope.recessionStatus = "BOOM";
 
 		// Initial property data
-		$scope.studioPrice = 100000;
-		$scope.flatPrice = 200000;
-		$scope.penthousePrice = 500000;
-		$scope.villaPrice = 1000000;
-		$scope.blockPrice = 2000000;
-		$scope.towerPrice = 5000000;
-		$scope.complexPrice = 15000000;
-		$scope.urbanPrice = 50000000;
+		$scope.athensPrice = 100000;
+		$scope.athensPriceAbb = abbreviateNumber($scope.athensPrice);
+		$scope.barcelonaPrice = 250000;
+		$scope.barcelonaPriceAbb = abbreviateNumber($scope.barcelonaPrice);
+		$scope.mumbaiPrice = 500000;
+		$scope.mumbaiPriceAbb = abbreviateNumber($scope.mumbaiPrice);
+		$scope.sydneyPrice = 750000;
+		$scope.sydneyPriceAbb = abbreviateNumber($scope.sydneyPrice);
+		$scope.parisPrice = 1000000;
+		$scope.parisPriceAbb = abbreviateNumber($scope.parisPrice);
+		$scope.newYorkPrice = 2000000;
+		$scope.newYorkPriceAbb = abbreviateNumber($scope.newYorkPrice);
+		$scope.londonPrice = 3000000;
+		$scope.londonPriceAbb = abbreviateNumber($scope.londonPrice);
+		$scope.hongKongPrice = 5000000;
+		$scope.hongKongPriceAbb = abbreviateNumber($scope.hongKongPrice);
 
-		$scope.studio = "STUDIO";
-		$scope.apartment = "APARTMENT";
-		$scope.penthouse = "PENTHOUSE";
-		$scope.villa = "VILLA";
-		$scope.block = "BLOCK";
-		$scope.tower = "TOWER";
-		$scope.complex = "COMPLEX";
-		$scope.urban = "TOWN";
+		$scope.athens = "ATHENS";
+		$scope.barcelona = "BARCELONA";
+		$scope.mumbai = "MUMBAI";
+		$scope.sydney = "SYDNEY";
+		$scope.paris = "PARIS";
+		$scope.newYork = "NEW YORK";
+		$scope.london = "LONDON";
+		$scope.hongKong = "HONG KONG";
 		
 		// Player initial data
 		$scope.playerSavings = 38000;
+		$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 		$scope.playerDebt = 0;
+		$scope.playerDebtAbb = abbreviateNumber($scope.playerDebt);
 		$scope.netWorth = $scope.playerSavings - $scope.playerDebt;
+		negNetWorth($scope.netWorth);
 		$scope.totalRent = 0;
+		$scope.totalRentAbb = abbreviateNumber($scope.totalRent);
 		$scope.totalMonthlyMortgage = 0;
+		$scope.totalMonthlyMortgageAbb = abbreviateNumber($scope.totalMonthlyMortgage);
 		$scope.properties = [];
 
 		// Game initial settings
 		$('.propertyList').hide();
 		$('.gameOver').hide();
 		$('.yUNo').hide();
-		$scope.currentSpeed = 100;
+		$scope.currentSpeed = 10;
 	}
 
 	// Buy 1 property actions
@@ -65,12 +78,15 @@ angular.module('game', [])
 			$scope.properties.push({
 				propertyIs: $scope.typeString,
 				totalPrice: $scope.generalTotalPrice,
+				totalPriceAbb: abbreviateNumber($scope.generalTotalPrice),
 				marketPrice: $scope.generalTotalPrice,
 				mortgage: Math.round(($scope.generalTotalPrice * 0.8 * 1.2) + $scope.generalTotalPrice * 0.8),
 				monthlyPayment: Math.round((($scope.generalTotalPrice * 0.8 * 1.2) + $scope.generalTotalPrice * 0.8) / 480),
 				rent: Math.round($scope.generalTotalPrice / 165),
 				cancel: Math.round($scope.generalTotalPrice * 0.8),
+				cancelAbb: "$" + abbreviateNumber(Math.round($scope.generalTotalPrice * 0.8)),
 				refurbish: Math.round($scope.generalTotalPrice * 0.2),
+				refurbishAbb: abbreviateNumber(Math.round($scope.generalTotalPrice * 0.2)),
 				devaluation: 0,
 				colorSell: "none",
 				colorCancel: "none",
@@ -79,7 +95,9 @@ angular.module('game', [])
 
 			// Update player data
 			$scope.playerSavings-= Math.round($scope.generalTotalPrice * 0.2);
+			$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 			$scope.playerDebt+= Math.round(($scope.generalTotalPrice * 0.8 * 1.2) + $scope.generalTotalPrice * 0.8);
+			$scope.playerDebtAbb = abbreviateNumber($scope.playerDebt);
 
 			// Start the game / time function
 			if ($scope.year == 1999) {
@@ -101,14 +119,22 @@ angular.module('game', [])
 
 		// Update properties market price
 		$scope.$apply(function(){
-			$scope.studioPrice = Math.round($scope.studioPrice + $scope.studioPrice * $scope.recession);
-			$scope.flatPrice = Math.round($scope.flatPrice + $scope.flatPrice * $scope.recession);
-			$scope.penthousePrice = Math.round($scope.penthousePrice + $scope.penthousePrice * $scope.recession);
-			$scope.villaPrice = Math.round($scope.villaPrice + $scope.villaPrice * $scope.recession);
-			$scope.blockPrice = Math.round($scope.blockPrice + $scope.blockPrice * $scope.recession);
-			$scope.towerPrice = Math.round($scope.towerPrice + $scope.towerPrice * $scope.recession);
-			$scope.complexPrice = Math.round($scope.complexPrice + $scope.complexPrice * $scope.recession);
-			$scope.urbanPrice = Math.round($scope.urbanPrice + $scope.urbanPrice * $scope.recession);
+			$scope.athensPrice = Math.round($scope.athensPrice + $scope.athensPrice * $scope.recession);
+			$scope.athensPriceAbb = abbreviateNumber($scope.athensPrice)
+			$scope.barcelonaPrice = Math.round($scope.barcelonaPrice + $scope.barcelonaPrice * $scope.recession);
+			$scope.barcelonaPriceAbb = abbreviateNumber($scope.barcelonaPrice);
+			$scope.mumbaiPrice = Math.round($scope.mumbaiPrice + $scope.mumbaiPrice * $scope.recession);
+			$scope.mumbaiPriceAbb = abbreviateNumber($scope.mumbaiPrice);
+			$scope.sydneyPrice = Math.round($scope.sydneyPrice + $scope.sydneyPrice * $scope.recession);
+			$scope.sydneyPriceAbb = abbreviateNumber($scope.sydneyPrice);
+			$scope.parisPrice = Math.round($scope.parisPrice + $scope.parisPrice * $scope.recession);
+			$scope.parisPriceAbb = abbreviateNumber($scope.parisPrice);
+			$scope.newYorkPrice = Math.round($scope.newYorkPrice + $scope.newYorkPrice * $scope.recession);
+			$scope.newYorkPriceAbb = abbreviateNumber($scope.newYorkPrice);
+			$scope.londonPrice = Math.round($scope.londonPrice + $scope.londonPrice * $scope.recession);
+			$scope.londonPriceAbb = abbreviateNumber($scope.londonPrice);
+			$scope.hongKongPrice = Math.round($scope.hongKongPrice + $scope.hongKongPrice * $scope.recession);
+			$scope.hongKongPriceAbb = abbreviateNumber($scope.hongKongPrice);
 		});
 
 		// +1 Year
@@ -121,8 +147,10 @@ angular.module('game', [])
 		$scope.$apply(function(){
 			$scope.date = $scope.monthArray[$scope.counter] + " " + $scope.year;
 			$scope.playerSavings+= Math.round($scope.playerSavings * 0.001);
+			$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 			// The score
 			$scope.netWorth = $scope.playerSavings - $scope.playerDebt + $scope.totalPropertiesPrice;
+			negNetWorth($scope.netWorth);
 		});
 
 
@@ -139,11 +167,12 @@ angular.module('game', [])
 			$('.gameOver').show();
 
 			$scope.$apply(function(){
-				$scope.netWorth;
 				// Game over message
 				if ($scope.netWorth > 1000000000) {
 					$scope.gameOver = "Congrats. You are richer than Donald Trump!";
-				} else if ($scope.netWorth < 1000000) {
+				} else if (0 > $scope.netWorth) {
+					$scope.gameOver = "Game Over! You owe a shit-ton of money to the evil banks!";
+				}	else if (0 <= $scope.netWorth < 1000000) {
 					$scope.gameOver = "Game Over! You really tried your best to stay poor(ish).";
 				} else {
 					$scope.gameOver = "Game Over! You are dead and failed to become filthy rich.";
@@ -153,8 +182,10 @@ angular.module('game', [])
 				if ($scope.netWorth > Number(localStorage.highScore) || typeof localStorage.highScore === 'undefined') {
 		    	localStorage.highScore = $scope.netWorth;
 		    	$scope.highScore = localStorage.getItem("highScore");
+		    	$scope.highScoreAbb = abbreviateNumber($scope.highScore);
 		    } else {
 		    	$scope.highScore = localStorage.getItem("highScore");
+		    	$scope.highScoreAbb = abbreviateNumber($scope.highScore);
 		    }
 			});
 
@@ -175,59 +206,61 @@ angular.module('game', [])
 		// Refresh monthly data
 		$scope.totalPropertiesPrice = 0;
 		$scope.totalRent = 0;
+		$scope.totalRentAbb = abbreviateNumber($scope.totalRent);
 		$scope.totalMonthlyMortgage = 0;
+		$scope.totalMonthlyMortgageAbb = abbreviateNumber($scope.totalMonthlyMortgage);
 
 		// Manage button color
 		if ($scope.properties.length < 15) {
-			if (($scope.studioPrice * 0.2) < $scope.playerSavings) {
-				$( ".studio" ).addClass( "green" );
+			if (($scope.athensPrice * 0.2) < $scope.playerSavings) {
+				$( ".athens" ).addClass( "green" );
 			} else {
-				$( ".studio" ).removeClass( "green" );
+				$( ".athens" ).removeClass( "green" );
 			}
-			if (($scope.flatPrice * 0.2) < $scope.playerSavings) {
-				$( ".flat" ).addClass( "green" );
+			if (($scope.barcelonaPrice * 0.2) < $scope.playerSavings) {
+				$( ".barcelona" ).addClass( "green" );
 			} else {
-				$( ".flat" ).removeClass( "green" );
+				$( ".barcelona" ).removeClass( "green" );
 			}
-			if (($scope.penthousePrice * 0.2) < $scope.playerSavings) {
-				$( ".penthouse" ).addClass( "green" );
+			if (($scope.mumbaiPrice * 0.2) < $scope.playerSavings) {
+				$( ".mumbai" ).addClass( "green" );
 			} else {
-				$( ".penthouse" ).removeClass( "green" );
+				$( ".mumbai" ).removeClass( "green" );
 			}
-			if (($scope.villaPrice * 0.2) < $scope.playerSavings) {
-				$( ".villa" ).addClass( "green" );
+			if (($scope.sydneyPrice * 0.2) < $scope.playerSavings) {
+				$( ".sydney" ).addClass( "green" );
 			} else {
-				$( ".villa" ).removeClass( "green" );
+				$( ".sydney" ).removeClass( "green" );
 			}
-			if (($scope.blockPrice * 0.2) < $scope.playerSavings) {
-				$( ".block" ).addClass( "green" );
+			if (($scope.parisPrice * 0.2) < $scope.playerSavings) {
+				$( ".paris" ).addClass( "green" );
 			} else {
-				$( ".block" ).removeClass( "green" );
+				$( ".paris" ).removeClass( "green" );
 			}
-			if (($scope.towerPrice * 0.2) < $scope.playerSavings) {
-				$( ".tower" ).addClass( "green" );
+			if (($scope.newYorkPrice * 0.2) < $scope.playerSavings) {
+				$( ".newYork" ).addClass( "green" );
 			} else {
-				$( ".tower" ).removeClass( "green" );
+				$( ".newYork" ).removeClass( "green" );
 			}
-			if (($scope.complexPrice * 0.2) < $scope.playerSavings) {
-				$( ".complex" ).addClass( "green" );
+			if (($scope.londonPrice * 0.2) < $scope.playerSavings) {
+				$( ".london" ).addClass( "green" );
 			} else {
-				$( ".complex" ).removeClass( "green" );
+				$( ".london" ).removeClass( "green" );
 			}
-			if (($scope.urbanPrice * 0.2) < $scope.playerSavings) {
-				$( ".urban" ).addClass( "green" );
+			if (($scope.hongKongPrice * 0.2) < $scope.playerSavings) {
+				$( ".hongKong" ).addClass( "green" );
 			} else {
-				$( ".urban" ).removeClass( "green" );
+				$( ".hongKong" ).removeClass( "green" );
 			}
 		} else {
-			$( ".studio" ).removeClass( "green" );
-			$( ".flat" ).removeClass( "green" );
-			$( ".penthouse" ).removeClass( "green" );
-			$( ".villa" ).removeClass( "green" );
-			$( ".block" ).removeClass( "green" );
-			$( ".tower" ).removeClass( "green" );
-			$( ".complex" ).removeClass( "green" );
-			$( ".urban" ).removeClass( "green" );
+			$( ".athens" ).removeClass( "green" );
+			$( ".barcelona" ).removeClass( "green" );
+			$( ".mumbai" ).removeClass( "green" );
+			$( ".sydney" ).removeClass( "green" );
+			$( ".paris" ).removeClass( "green" );
+			$( ".newYork" ).removeClass( "green" );
+			$( ".london" ).removeClass( "green" );
+			$( ".hongKong" ).removeClass( "green" );
 		};
 		
 		// Run if the player owns properties
@@ -238,18 +271,24 @@ angular.module('game', [])
 				$scope.properties[i].marketPrice = Math.round($scope.properties[i].marketPrice + ($scope.properties[i].marketPrice * $scope.recession));
 				$scope.totalPropertiesPrice+= $scope.properties[i].marketPrice;
 				$scope.totalRent+= $scope.properties[i].rent;
+				$scope.totalRentAbb = abbreviateNumber($scope.totalRent);
 				$scope.totalMonthlyMortgage+= $scope.properties[i].monthlyPayment;
+				$scope.totalMonthlyMortgageAbb = abbreviateNumber($scope.totalMonthlyMortgage);
 				$scope.properties[i].devaluation +=1;
 				$scope.properties[i].refurbish = Math.round($scope.properties[i].marketPrice * 0.2);
+				$scope.properties[i].refurbishAbb = abbreviateNumber($scope.properties[i].refurbish);
 
 				// Adjust property devaluation after 15 years
 				if ($scope.properties[i].devaluation > 179) {
 					$scope.properties[i].totalPrice = Math.round($scope.properties[i].totalPrice + ($scope.properties[i].totalPrice * $scope.recession));
+					$scope.properties[i].totalPriceAbb = abbreviateNumber($scope.properties[i].totalPrice);
 				} else {
 					if ($scope.recessionStatus == "BOOM") {
 						$scope.properties[i].totalPrice = Math.round($scope.properties[i].totalPrice + $scope.properties[i].totalPrice * ($scope.recession - ($scope.properties[i].devaluation / 450 * $scope.recession)));
+						$scope.properties[i].totalPriceAbb = abbreviateNumber($scope.properties[i].totalPrice);
 					} else {
 						$scope.properties[i].totalPrice = Math.round($scope.properties[i].totalPrice + $scope.properties[i].totalPrice * ($scope.recession + ($scope.properties[i].devaluation / 450 * $scope.recession)));
+						$scope.properties[i].totalPriceAbb = abbreviateNumber($scope.properties[i].totalPrice);
 					};
 					
 				}
@@ -257,8 +296,10 @@ angular.module('game', [])
 				// Adjust cancel mortgage price or keep it at 0
 				if ($scope.properties[i].cancel > 0) {
 					$scope.properties[i].cancel-= Math.round($scope.properties[i].monthlyPayment * 0.45);
+					$scope.properties[i].cancelAbb = "$" + abbreviateNumber($scope.properties[i].cancel);
 				} else {
 					$scope.properties[i].cancel = 0;
+					$scope.properties[i].cancelAbb = "Mortgage Free";
 				}
 
 				// Increase rent every year
@@ -270,11 +311,16 @@ angular.module('game', [])
 				if ($scope.playerDebt > 0) {
 					$scope.properties[i].mortgage-= $scope.properties[i].monthlyPayment;
 					$scope.playerSavings+= $scope.properties[i].rent;
+					$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 					$scope.playerSavings-= $scope.properties[i].monthlyPayment;
+					$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 					$scope.playerDebt-= $scope.properties[i].monthlyPayment;
+					$scope.playerDebtAbb = abbreviateNumber($scope.playerDebt);
 				} else {
 					$scope.playerDebt = 0;
+					$scope.playerDebtAbb = abbreviateNumber($scope.playerDebt);
 					$scope.playerSavings+= $scope.properties[i].rent;
+					$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 				}
 
 				// Every 15 years the player can refurbish the property if he has enough savings
@@ -284,8 +330,10 @@ angular.module('game', [])
 					gameData.refurbish = function($index) {
 						$scope.properties[$index].colorRefurbish = "none";
 						$scope.playerSavings-= $scope.properties[$index].refurbish;
+						$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 						$scope.properties[$index].devaluation = 0;
 						$scope.properties[$index].totalPrice = $scope.properties[$index].marketPrice;
+						$scope.properties[$index].totalPriceAbb = abbreviateNumber($scope.properties[$index].totalPrice);
 					};
 				};
 
@@ -301,9 +349,12 @@ angular.module('game', [])
 					if ($scope.properties[$index].cancel <= $scope.playerSavings) {
 						$scope.properties[$index].colorCancel = "none";
 						$scope.playerSavings-= $scope.properties[$index].cancel;
+						$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 						$scope.playerDebt-= $scope.properties[$index].mortgage;
+						$scope.playerDebtAbb = abbreviateNumber($scope.playerDebt);
 						$scope.properties[$index].mortgage = 0;
 						$scope.properties[$index].cancel = 0;
+						$scope.properties[$index].cancelAbb = "Mortgage Free"
 						$scope.properties[$index].monthlyPayment = 0;
 					};
 				};		
@@ -315,7 +366,9 @@ angular.module('game', [])
 				gameData.sell = function($index) {
 					if ($scope.properties[$index].devaluation > 12) {
 						$scope.playerSavings+= $scope.properties[$index].totalPrice - $scope.properties[$index].cancel;
+						$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 						$scope.playerDebt-= $scope.properties[$index].mortgage;
+						$scope.playerDebtAbb = abbreviateNumber($scope.playerDebt);
 						$scope.properties.splice([$index], 1);
 					};
 				};				
@@ -353,12 +406,37 @@ angular.module('game', [])
 
 		$('.howToPlay').show();
 		$('.gamingData').show();		
-		$( ".flat" ).removeClass( "green" );
-		$( ".penthouse" ).removeClass( "green" );
-		$( ".villa" ).removeClass( "green" );
-		$( ".block" ).removeClass( "green" );
-		$( ".tower" ).removeClass( "green" );
-		$( ".complex" ).removeClass( "green" );
-		$( ".urban" ).removeClass( "green" );
+		$( ".barcelona" ).removeClass( "green" );
+		$( ".mumbai" ).removeClass( "green" );
+		$( ".sydney" ).removeClass( "green" );
+		$( ".paris" ).removeClass( "green" );
+		$( ".newYork" ).removeClass( "green" );
+		$( ".london" ).removeClass( "green" );
+		$( ".hongKong" ).removeClass( "green" );
+	}
+
+	// Abbreviate Numbers
+	function abbreviateNumber(value) {
+    var newValue = value;
+    var suffixes = ["", "K", "M", "B","T"];
+    var divide = [1, 1000, 1000000, 1000000000, 1000000000000];
+    
+    if ((""+value).length <= 4) {
+    	return newValue;
+	  } else {
+	  	var suffixNum = Math.floor(((""+value).length - 1)/3);
+	  	var shortValue = (value/divide[suffixNum]).toPrecision(3);
+	  	newValue = "" + shortValue + suffixes[suffixNum];
+	  	return newValue;
+	  }
+	}
+
+	// Fix negative netWorth
+	function negNetWorth(netW) {
+		if (netW >= 0) {
+				$scope.netWorthAbb = "$" + abbreviateNumber(netW);
+			} else {
+				$scope.netWorthAbb = "-$" + abbreviateNumber(netW).substring(1);
+			}
 	}
 }]);
