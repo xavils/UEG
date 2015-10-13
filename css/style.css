@@ -13,7 +13,7 @@ a {
 	cursor: pointer;
 }
 a:hover {
-	color: grey;
+	color: black;
 }
 a.green {
 	color: #419C57;
@@ -72,6 +72,49 @@ h1 {
 	margin: 30px auto;
 }
 
+/*//////////////////////////////////////////////*/
+/*///////////////version 2.0////////////////////*/
+/*//////////////////////////////////////////////*/
+.topButtons h5, .bottomButtons span {
+	position: relative;
+	display: inline;
+	margin-bottom: 10px;
+}
+.topButtons h5:first-of-type, .bottomButtons span:first-of-type {
+	float: left;
+}
+.topButtons h5:last-of-type, .bottomButtons span:last-of-type {
+	float: right;
+}
+.bottomButtons a {
+	display: inline-block;
+}
+i {
+	padding: 0 10px;
+}
+.theNumberSmall {
+	font-size: 35px;
+	line-height: 25px;
+}
+.cityFile {
+	width: 22%;
+	margin: 1%;
+	display: inline-block;
+	border: 1px dotted grey;
+	border-radius: 7px;
+}
+.cityFile button {
+	width: 175px;
+	height: 30px;
+	line-height: 30px;
+}
+.cityFile h4 {
+	display: inline;
+}
+.cityFile i {
+	padding: 10px 0 0 20px;
+}
+
 @media (max-width: 1125px) {
 	.six.columns {
 	    width: 100%;
@@ -81,5 +124,19 @@ h1 {
 	}
 	.economicData {
 		margin-bottom: 30px;
+	}
+	.cityFile {
+		width: 44%;
+	}
+}
+
+@media (max-width: 600px) {
+	.cityFile {
+		width: 90%;
+	}
+}
+@media (max-width: 520px) {
+	.cityFile {
+		width: 80%;
 	}
 }

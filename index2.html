@@ -20,7 +20,6 @@
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<link rel="stylesheet" href="Skeleton/normalize.css">
 	<link rel="stylesheet" href="Skeleton/skeleton.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 	<!-- Favicon
@@ -29,55 +28,72 @@
 </head>
 <body ng-app="game" class="ng-cloak">
 	<div class="container" ng-controller="gameController as gameData">
-		<div class="row topButtons">
-			<div class="twelve columns">
-				<h5><a ng-click="gameData.howToPlay()">{{howTo}}</a></h5>
-				<h5>{{date}}</h5>
-			</div>
-		</div>
 		<div class="row">
 			<div class="twelve columns">
 				<h1>unReal Estate</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="twelve columns">
-				<p class="largeNet">Net worth <span class="theNumber">{{netWorthAbb}}</span><a ng-click="gameData.moreInfo()"><i class="fa fa-caret-right fa-2x"></i></a></p>			
-				<p class="smallNet"><a ng-click="gameData.moreInfo()"><i class="fa fa-caret-left fa-2x"></i></a>Net worth <span class="theNumberSmall">{{netWorthAbb}}</span> / Savings ${{playerSavingsAbb}} / Debts ${{playerDebtAbb}} / Rent Income ${{totalRentAbb}} / Monthly Mortgage ${{totalMonthlyMortgageAbb}}</p>			
+				<h4>{{date}}</h4>
+				<p>Net worth <span class="theNumber">{{netWorthAbb}}</span></p>			
 			</div>
 		</div>
 		<div class="row howToPlay">	
 			<div class="twelve columns">
 				<h3>How to play</h3>
-				<p>Welcome to unReal Estate, the game where you become a real estate mogul! The goal of the game is to <b>become a billionare</b> (the richer the better) <b>before January 2100</b>. Your path of glory begins in december 1999 when you have saved enough dough to buy an apartment in Athens, Greece. You pay 20% of the cost and the bank will lend you the rest. This property will provide a rent in return and you will also be paying mortgage until you repay the debt. <u>Beware of economic cycles as real estate will go up and down periodically.</u> The game will last 4-20 minutes.</p>
+				<p>Welcome to unReal Estate, the game where you become a real estate mogul! The goal of the game is to <b>become a billionare</b> (the richer the better) <b>before January 2100</b>. Your path of glory begins in december 1999 when you have saved enough dough to buy an apartment in Athens. You pay 20% of the cost and the bank will lend you the rest. This property will provide a rent in return and you will also be paying mortgage until you repay the debt. <u>Beware of economic cycles as real estate will go up and down periodically.</u> The game will last 10-20 minutes.</p>
 				<p><b>Actions you can perform:</b></p>
 				<ul>
-					<li>Once you have enough savings buy an apartment you can afford.</li>
-					<li>After 1 year of owning property you can sell it back to the market.</li>
+					<li>Once you have enough savings buy an apartment to a max of 15 total.</li>
+					<li>After 1 year of owning a property you can sell it back to the market.</li>
 					<li>If you have enough savings, cancel your mortgage to avoid paying hefty interests.</li>
-					<li>Every 15 years you will be able to refurbish your properties to avoid loosing value.</li>
-					<li>Adjust the game speed (bottom right) to your playing abilities.</li>
+					<li>Every 15 years you will be able to refurbish your property to avoid loosing value.</li>
 				</ul>
 		    </div>
 		</div>
-		<!-- <div class="row yUNo">
-			<h2>Y U NO buy more properties???</h2>
-		</div> -->
+		<div class="row gamingData">
+			<div class="five columns economicData">
+				<button ng-click="gameData.speed()">Speed</button>
+				<p>Savings ${{playerSavingsAbb}}</p>
+				<p>Debts ${{playerDebtAbb}}</p>
+				<p>Rent Income ${{totalRentAbb}}</p>
+				<p>Monthly Mortgage ${{totalMonthlyMortgageAbb}}</p>
+				<p class="{{recessionStatus}}">{{recessionStatus}}</p>
+			</div>	
+			<div class="seven columns clickToBuy">
+				<h3>Buy 1 property</h3>
+				<button ng-click="gameData.buy(athensPrice, athens)" class="athens green">athens ${{athensPriceAbb}}</button>
+				<button ng-click="gameData.buy(barcelonaPrice, barcelona)" class="barcelona">barcelona ${{barcelonaPriceAbb}}</button>
+				<button ng-click="gameData.buy(mumbaiPrice, mumbai)" class="mumbai">mumbai ${{mumbaiPriceAbb}}</button>
+				<button ng-click="gameData.buy(sydneyPrice, sydney)" class="sydney">sydney ${{sydneyPriceAbb}}</button>
+				<button ng-click="gameData.buy(parisPrice, paris)" class="paris">paris ${{parisPriceAbb}}</button>
+				<button ng-click="gameData.buy(newYorkPrice, newYork)" class="newYork">new york ${{newYorkPriceAbb}}</button>
+				<button ng-click="gameData.buy(londonPrice, london)" class="london">london ${{londonPriceAbb}}</button>
+				<button ng-click="gameData.buy(hongKongPrice, hongKong)" class="hongKong">hong kong ${{hongKongPriceAbb}}</button>
+			</div>
+		</div>
 		<div class="row propertyList">	
 			<div class="twelve columns">
-				<div ng-repeat="city in cities" class="cityFile">
-					<div><h4>{{city.units}}x</h4><i class="fa fa-forward fa-2x"></i></div>
-					<div><h3>{{city.cityName}}</h3></div>
-					<div>
-						<button ng-click="gameData.buy($index)" class="buy {{city.colorBuy}}">Buy ${{city.buyPriceAbb}}</button>
-	      				<button ng-click="gameData.sell($index)" class="sell {{city.colorSell}}">Sell ${{city.sellPriceAbb}}</button>
-						<button ng-click="gameData.cancel($index)" class="cancel {{city.colorCancel}}">{{city.cancelAbb}}</button>
-						<button ng-click="gameData.refurbish($index)" class="refurbish {{city.colorRefurbish}}">Refurbish ${{city.refurbishAbb}}</button>
-					</div>
-		        </div>
+				<h3>Your properties</h3>
+				<table class="u-full-width">
+					<thead>
+						<tr>
+							<th>CITY</th>
+							<th>SELL PROPERTY</th>
+							<th>CANCEL MORTGAGE</th>
+							<th>REFURBISH COST</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="property in properties">
+							<td>{{property.propertyIs}}</td>
+	          	<td><a ng-click="gameData.sell($index)" class="sell {{property.colorSell}}">${{property.totalPriceAbb}}</a></td>
+							<td><a ng-click="gameData.cancel($index)" class="cancel {{property.colorCancel}}">{{property.cancelAbb}}</a></td>
+							<td><a ng-click="gameData.refurbish($index)" class="refurbish {{property.colorRefurbish}}">${{property.refurbishAbb}}</a></td>
+		        </tr>
 					</tbody>
 			    </table>
 		    </div>
+		</div>
+		<div class="row yUNo">
+			<h2>Y U NO buy more properties???</h2>
 		</div>
 		<div class="row gameOver">	
 			<div class="twelve columns">
@@ -88,20 +104,8 @@
 				<p>Created by <a href="http://xavils.com" target="_blank">xavils</a>, inspired by <a href="http://hyperhippo.ca/" target="_blank">Hyper Hippo's Ad Capitalist</a>.</p>
 	    	</div>
 		</div>
-		<div class="row bottomButtons">
-			<div class="twelve columns">
-				<span class="{{recessionStatus}}">{{recessionStatus}}</span>
-				<span>
-					<a ng-click="gameData.speed()"><h3>{{xSpeed}}</h3></a>
-					<a ng-click="gameData.volumeControl()"><i class="fa fa-volume-{{volume}} fa-2x"></i></a>
-				</span>
-			</div>
-		</div>
 	</div>
 
-	<audio autoplay loop id="testLoop">
-	  <source src="Audio/loop.wav" type="audio/wav">
-	</audio>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
