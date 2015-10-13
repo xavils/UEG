@@ -45,10 +45,11 @@ button.green:hover {
 	display: inline-block;
 }
 .theNumber {
-	font-size: 100px;
-	line-height: 70px;
+	font-size: 75px;
+	line-height: 60px;
 }
 h1 {
+	font-size: 40px;
 	text-decoration: underline;
 }
 .economicData {
@@ -78,7 +79,7 @@ h1 {
 .topButtons h5, .bottomButtons span {
 	position: relative;
 	display: inline;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 }
 .topButtons h5:first-of-type, .bottomButtons span:first-of-type {
 	float: left;
@@ -91,6 +92,9 @@ h1 {
 }
 i {
 	padding: 0 10px;
+}
+.largeNet, .smallNet {
+	margin-bottom: 10px;
 }
 .theNumberSmall {
 	font-size: 35px;
@@ -107,12 +111,20 @@ i {
 	width: 175px;
 	height: 30px;
 	line-height: 30px;
+	margin-bottom: 5px;
+	padding: 0;
 }
-.cityFile h4 {
+.cityFile button:last-of-type {
+	margin-bottom: 10px;
+}
+.cityFile h2 {
 	display: inline;
 }
 .cityFile i {
 	padding: 10px 0 0 20px;
+}
+.propertyList h3{
+	margin-bottom: 5px;
 }
 
 @media (max-width: 1125px) {

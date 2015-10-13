@@ -66,7 +66,7 @@
 		<div class="row propertyList">	
 			<div class="twelve columns">
 				<div ng-repeat="city in cities" class="cityFile">
-					<div><h4>{{city.units}}x</h4><i class="fa fa-forward fa-2x"></i></div>
+					<div><h2>{{city.units}}x</h2><i class="fa fa-forward fa-2x"></i></div>
 					<div><h3>{{city.cityName}}</h3></div>
 					<div>
 						<button ng-click="gameData.buy($index)" class="buy {{city.colorBuy}}">Buy ${{city.buyPriceAbb}}</button>
