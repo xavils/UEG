@@ -76,9 +76,9 @@
 					<div><h3>{{city.cityName}}</h3></div>
 					<div>
 						<button ng-click="gameData.buy($index)" class="buy {{city.colorBuy}}">Buy ${{city.buyPriceAbb}}</button>
-	      				<button ng-click="gameData.sell($index)" class="sell {{city.colorSell}}">Sell ${{city.sellPriceAbb}}</button>
+	      				<button ng-click="gameData.sell($index)" class="sell {{city.colorSell}}">{{city.sellPriceAbb}}</button>
 						<button ng-click="gameData.cancel($index)" class="cancel {{city.colorCancel}}">{{city.cancelAbb}}</button>
-						<button ng-click="gameData.refurbish($index)" class="refurbish {{city.colorRefurbish}}">Refurbish ${{city.refurbishAbb}}</button>
+						<button ng-click="gameData.refurbish($index)" class="refurbish {{city.colorRefurbish}}">{{city.refurbishAbb}}</button>
 					</div>
 		        </div>
 		    </div>

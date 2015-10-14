@@ -38,11 +38,11 @@ angular.module('game', [])
 				buyPrice: $scope.citiesPrice[i],
 				buyPriceAbb: abbreviateNumber($scope.citiesPrice[i]),
 				sellPrice: 0,
-				sellPriceAbb: 0,
+				sellPriceAbb: "Buy More, Buy More!",
 				cancel: 0,
 				cancelAbb: "Mortgage Free",
 				refurbish: 0,
-				refurbishAbb: 0,
+				refurbishAbb: "Nothing to repair",
 				devaluation: 0,
 				sellCounter: 0,
 				colorBuy: "none",
@@ -65,7 +65,7 @@ angular.module('game', [])
 		$scope.recessionStatus = "BOOM";
 		$scope.volume = "up";
 		$scope.xSpeed = "1x";
-		$scope.currentSpeed = 1000;
+		$scope.currentSpeed = 100;
 		greenButton();
 	}
 
@@ -78,11 +78,11 @@ angular.module('game', [])
 			// Update city data
 			$scope.cities[$index].units+=1;
 			$scope.cities[$index].sellPrice = (($scope.cities[$index].sellPrice * ($scope.cities[$index].units-1)) + $scope.cities[$index].buyPrice) / $scope.cities[$index].units;
-			$scope.cities[$index].sellPriceAbb = abbreviateNumber($scope.cities[$index].sellPrice);
+			$scope.cities[$index].sellPriceAbb = "Sell $" + abbreviateNumber($scope.cities[$index].sellPrice);
 			$scope.cities[$index].cancel+= ($scope.cities[$index].buyPrice * 0.8);
 			$scope.cities[$index].cancelAbb = "Cancel Debt $" + abbreviateNumber($scope.cities[$index].cancel);
 			$scope.cities[$index].refurbish = $scope.cities[$index].buyPrice * $scope.cities[$index].units * 0.1;
-			$scope.cities[$index].refurbishAbb = abbreviateNumber($scope.cities[$index].refurbish);
+			$scope.cities[$index].refurbishAbb = "Good condition";
 			$scope.cities[$index].devaluation = $scope.cities[$index].devaluation * ($scope.cities[$index].units-1) / $scope.cities[$index].units;
 			$scope.cities[$index].sellCounter = 0;
 			$scope.cities[$index].mortgage+= ($scope.cities[$index].buyPrice * 0.8 * 1.2) + $scope.cities[$index].buyPrice * 0.8;
@@ -104,10 +104,7 @@ angular.module('game', [])
 			// Start the game / time function
 			if ($scope.year == 1999) {
 				setTimeout(month, $scope.currentSpeed);
-				setTimeout(propertyStatus, $scope.currentSpeed);
-			}
-
-			
+			}		
 		}
 	};
 
@@ -145,27 +142,15 @@ angular.module('game', [])
 			return;
 		}
 
-		$scope.counter +=1;
-		setTimeout(month, $scope.currentSpeed);
-	}
-
-	// Real-time update all game money data
-	function propertyStatus() {
-		// Data freeze on game over
-		if ($scope.year == 2100) {
-			return;
-		}
-
 		// Refresh monthly data
 		$scope.totalPropertiesPrice = 0;
-		$scope.totalRent = 0;
+		$scope.rentSum = 0;
 
 		// Run through all properties
 		for (i=0; i<8; i++) {
 			// Global property data
-			$scope.totalPropertiesPrice+= $scope.cities[i].buyPrice * $scope.cities[i].units;
-			$scope.totalRent+= $scope.cities[i].rent;
-			$scope.totalRentAbb = abbreviateNumber($scope.totalRent);
+			$scope.totalPropertiesPrice+= $scope.cities[i].sellPrice * $scope.cities[i].units;
+			$scope.rentSum+= $scope.cities[i].rent;
 
 			// Devaluation and sell data
 			if ($scope.cities[i].units > 0) {
@@ -178,19 +163,25 @@ angular.module('game', [])
 
 			// Refurbish Data
 			$scope.cities[i].refurbish = $scope.cities[i].buyPrice * 0.1 * $scope.cities[i].units;
-			$scope.cities[i].refurbishAbb = abbreviateNumber($scope.cities[i].refurbish);
+			if ($scope.cities[i].devaluation <= 179) {
+				$scope.cities[i].refurbishAbb = "Good condition";
+			} else if ($scope.cities[i].devaluation > 179 && $scope.playerSavings >= $scope.cities[i].refurbish) {
+				$scope.cities[i].refurbishAbb = "Refurbish $" + abbreviateNumber($scope.cities[i].refurbish);
+			} else {
+				$scope.cities[i].refurbishAbb = "Can't afford repair";
+			}
 
 			// Sell Price & adjust property devaluation after 15 years
 			if ($scope.cities[i].devaluation > 179) {
 				$scope.cities[i].sellPrice+= ($scope.cities[i].sellPrice * $scope.recession);
-				$scope.cities[i].sellPriceAbb = abbreviateNumber($scope.cities[i].sellPrice);
+				$scope.cities[i].sellPriceAbb = "Sell $" + abbreviateNumber($scope.cities[i].sellPrice);
 			} else {
 				if ($scope.recessionStatus == "BOOM") {
 					$scope.cities[i].sellPrice = $scope.cities[i].sellPrice + $scope.cities[i].sellPrice * ($scope.recession - ($scope.cities[i].devaluation / 450 * $scope.recession));
-					$scope.cities[i].sellPriceAbb = abbreviateNumber($scope.cities[i].sellPrice);
+					$scope.cities[i].sellPriceAbb = "Sell $" + abbreviateNumber($scope.cities[i].sellPrice);
 				} else {
 					$scope.cities[i].sellPrice = $scope.cities[i].sellPrice + $scope.cities[i].sellPrice * ($scope.recession + ($scope.cities[i].devaluation / 450 * $scope.recession));
-					$scope.cities[i].sellPriceAbb = abbreviateNumber($scope.cities[i].sellPrice);
+					$scope.cities[i].sellPriceAbb = "Sell $" + abbreviateNumber($scope.cities[i].sellPrice);
 				}				
 			}
 			
@@ -204,14 +195,14 @@ angular.module('game', [])
 			}
 
 			// Increase rent every year
-			if ($scope.cities[i].devaluation%12 === 0) {
+			if ($scope.counter%12 === 0) {
 				$scope.cities[i].rent = $scope.cities[i].sellPrice / 165 * $scope.cities[i].units;
 			}
 
 			// Make sure player debt doesn't become negative. Add and deduct rent and mortgage from savings and debt
 			if ($scope.playerDebt > 0) {
 				$scope.cities[i].mortgage-= $scope.cities[i].monthlyPayment;
-				$scope.playerSavings+= $scope.cities[i].rent;
+				$scope.playerSavings+= $scope.cities[i].rent;//////////////////////////////////////////////////////////////////////////////////////////////////////////
 				$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 				$scope.playerSavings-= $scope.cities[i].monthlyPayment;
 				$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
@@ -220,15 +211,20 @@ angular.module('game', [])
 			} else {
 				$scope.playerDebt = 0;
 				$scope.playerDebtAbb = abbreviateNumber($scope.playerDebt);
-				$scope.playerSavings+= $scope.cities[i].rent;
+				$scope.playerSavings+= $scope.cities[i].rent;//////////////////////////////////////////////////////////////////////////////////////////////////////////
 				$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 			}
 
 			debtAdjust();
 		}
 
+		// Monthly general data
+		$scope.totalRent = $scope.rentSum;
+		$scope.totalRentAbb = abbreviateNumber($scope.totalRent);
+
 		greenButton();
-		setTimeout(propertyStatus, $scope.currentSpeed);
+		$scope.counter +=1;
+		setTimeout(month, $scope.currentSpeed);
 	}
 
 	// Every 15 years the player can refurbish the property if he has enough savings
@@ -239,7 +235,7 @@ angular.module('game', [])
 			$scope.playerSavingsAbb = abbreviateNumber($scope.playerSavings);
 			$scope.cities[$index].devaluation = 0;
 			$scope.cities[$index].sellPrice = $scope.cities[$index].buyPrice;
-			$scope.cities[$index].sellPriceAbb = abbreviateNumber($scope.cities[$index].sellPrice);
+			$scope.cities[$index].sellPriceAbb = "Sell $" + abbreviateNumber($scope.cities[$index].sellPrice);
 
 			greenButton();
 		}
@@ -280,7 +276,8 @@ angular.module('game', [])
 
 			if ($scope.cities[$index].units === 0) {
 				$scope.cities[$index].sellPrice = 0;
-				$scope.cities[$index].sellPriceAbb = abbreviateNumber($scope.cities[$index].sellPrice);
+				$scope.cities[$index].sellPriceAbb = "Buy More, Buy More!";
+				$scope.cities[$index].refurbishAbb = "Nothing to repair";
 				$scope.cities[$index].cancel = 0;
 				$scope.cities[$index].cancelAbb = "Mortgage Free";
 			};

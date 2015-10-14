@@ -30,11 +30,12 @@ button.green:hover {
 }
 button.none {
 	cursor: default;
+	color: silver;
 }
 button.none:hover {
 	cursor: default;
 	border: 1px solid #bbb;
-	color: #555;
+	color: silver;
 
 }
 .BOOM {
