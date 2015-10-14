@@ -35,28 +35,34 @@
 				<h5>{{date}}</h5>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row titleRow">
 			<div class="twelve columns">
 				<h1>unReal Estate</h1>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row netWorthRow">
 			<div class="twelve columns">
-				<p class="largeNet">Net worth <span class="theNumber">{{netWorthAbb}}</span><a ng-click="gameData.moreInfo()"><i class="fa fa-caret-right fa-2x"></i></a></p>			
+				<p class="largeNet">Net worth <span class="theNumber">{{netWorthAbb}}</span><a ng-click="gameData.moreInfo()"><i class="fa fa-caret-right fa-2x hideEnd"></i></a></p>			
 				<p class="smallNet"><a ng-click="gameData.moreInfo()"><i class="fa fa-caret-left fa-2x"></i></a>Net worth <span class="theNumberSmall">{{netWorthAbb}}</span> / Savings ${{playerSavingsAbb}} / Debts ${{playerDebtAbb}} / Rent Income ${{totalRentAbb}} / Monthly Mortgage ${{totalMonthlyMortgageAbb}}</p>			
 			</div>
 		</div>
-		<div class="row howToPlay">	
+		<div class="row howToPlay" id="overwriteSkeleton">	
 			<div class="twelve columns">
 				<h3>How to play</h3>
-				<p>Welcome to unReal Estate, the game where you become a real estate mogul! The goal of the game is to <b>become a billionare</b> (the richer the better) <b>before January 2100</b>. Your path of glory begins in december 1999 when you have saved enough dough to buy an apartment in Athens, Greece. You pay 20% of the cost and the bank will lend you the rest. This property will provide a rent in return and you will also be paying mortgage until you repay the debt. <u>Beware of economic cycles as real estate will go up and down periodically.</u> The game will last 4-20 minutes.</p>
+				<p>Welcome to unReal Estate, the game where you become a real estate mogul! The goal of the game is to <b>become as rich as possible before January 2100</b> - your net worth is the score. Your path of glory begins in december 1999 when you have saved enough dough to buy an apartment in Athens, Greece. You pay 20% of the cost and the bank will lend you the rest. This property will provide a rent in return and you will also be paying mortgage until you repay the debt. <u>Beware of economic cycles as real estate will go up and down periodically.</u> The game will last 4-20 minutes.</p>
 				<p><b>Actions you can perform:</b></p>
 				<ul>
-					<li>Once you have enough savings buy an apartment you can afford.</li>
-					<li>After 1 year of owning property you can sell it back to the market.</li>
+					<li>Once you have enough savings buy an apartment where you can afford it.</li>
+					<li>You can sell any/all your properties as long as you have waited a year since the last bought property in that city.</li>
 					<li>If you have enough savings, cancel your mortgage to avoid paying hefty interests.</li>
 					<li>Every 15 years you will be able to refurbish your properties to avoid loosing value.</li>
 					<li>Adjust the game speed (bottom right) to your playing abilities.</li>
+				</ul>
+				<p><b>Some help:</b></p>
+				<ul>
+					<li>Net worth (AKA the score) = savings + owned properties value - debts.</li>
+					<li>Sell price is lower than buy price because your properties need repairs and are worth less than market price.</li>
+					<li>If you sell on the top of the boom and buy at the bottom of recession, you can afford more expensive properties but will lose rent income in the meantime.</li>
 				</ul>
 		    </div>
 		</div>
@@ -75,8 +81,6 @@
 						<button ng-click="gameData.refurbish($index)" class="refurbish {{city.colorRefurbish}}">Refurbish ${{city.refurbishAbb}}</button>
 					</div>
 		        </div>
-					</tbody>
-			    </table>
 		    </div>
 		</div>
 		<div class="row gameOver">	

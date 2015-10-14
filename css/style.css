@@ -3,7 +3,7 @@
 }
 body {
 	text-align: center;
-	padding-top: 20px;
+	padding-top: 10px;
 }
 th, td {
 	text-align: center;
@@ -28,6 +28,15 @@ button.green {
 button.green:hover {
 	opacity: 0.8;
 }
+button.none {
+	cursor: default;
+}
+button.none:hover {
+	cursor: default;
+	border: 1px solid #bbb;
+	color: #555;
+
+}
 .BOOM {
 	background-color: #A1D490;
 	color: white;
@@ -46,9 +55,10 @@ button.green:hover {
 }
 .theNumber {
 	font-size: 75px;
-	line-height: 60px;
+	line-height: 50px;
 }
 h1 {
+	margin-top: 15px;
 	font-size: 40px;
 	text-decoration: underline;
 }
@@ -63,7 +73,7 @@ h1 {
 	margin-bottom: 30px;
 }
 .howToPlay, .gamingData, .propertyList {
-	margin: 15px 0;
+	margin: 5px 0;
 }
 .twitter-share-button {
 	display: block;
@@ -76,16 +86,19 @@ h1 {
 /*//////////////////////////////////////////////*/
 /*///////////////version 2.0////////////////////*/
 /*//////////////////////////////////////////////*/
-.topButtons h5, .bottomButtons span {
+.topButtons {
 	position: relative;
-	display: inline;
+}
+.topButtons h5, .bottomButtons span {
+	position: absolute;
+	display: inline-block;
 	margin-bottom: 5px;
 }
 .topButtons h5:first-of-type, .bottomButtons span:first-of-type {
-	float: left;
+	left: 0;
 }
 .topButtons h5:last-of-type, .bottomButtons span:last-of-type {
-	float: right;
+	right: 0;
 }
 .bottomButtons a {
 	display: inline-block;
@@ -126,6 +139,16 @@ i {
 .propertyList h3{
 	margin-bottom: 5px;
 }
+.bottomButtons h3 {
+	margin-bottom: 0;
+	line-height: 1;
+}
+.howToPlay p {
+	margin-bottom: 10px;
+}
+#overwriteSkeleton li {
+	margin-bottom: 0rem;
+}
 
 @media (max-width: 1125px) {
 	.six.columns {
@@ -139,6 +162,9 @@ i {
 	}
 	.cityFile {
 		width: 44%;
+	}
+	h1 {
+		margin-top: 40px;
 	}
 }
 
