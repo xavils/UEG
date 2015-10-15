@@ -68,7 +68,7 @@ angular.module('game', [])
 		$scope.recessionStatus = "BOOM";
 		$scope.volume = "up";
 		$scope.xSpeed = "1x";
-		$scope.currentSpeed = 1000;
+		$scope.currentSpeed = 500;
 		greenButton();
 	}
 
@@ -315,14 +315,14 @@ angular.module('game', [])
 	}
 	// Set the game speed
 	gameData.speed = function() {
-		if ($scope.currentSpeed == 200) {
-			$scope.currentSpeed = 1000;
-			$scope.xSpeed = "1x";
-		} else if ($scope.currentSpeed == 1000) {
+		if ($scope.currentSpeed == 100) {
 			$scope.currentSpeed = 500;
+			$scope.xSpeed = "1x";
+		} else if ($scope.currentSpeed == 500) {
+			$scope.currentSpeed = 250;
 			$scope.xSpeed = "2x";
 		} else {
-			$scope.currentSpeed = 200;
+			$scope.currentSpeed = 100;
 			$scope.xSpeed = "5x";
 		}
 	};
