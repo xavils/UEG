@@ -26,8 +26,6 @@ Welcome to unReal Estate, the game where you become a real estate mogul! The goa
   <img src="https://cloud.githubusercontent.com/assets/3646960/10511022/1509d8ae-7369-11e5-931f-260125b2b4d5.jpg" alt="Screenshot"/>
 </p>
 
-That screenshot is fake, by the way. I never reached 2048 :smile:
-
 ## Contributions
 Thanks to LaiaMS for the original music.
 
