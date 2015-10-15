@@ -72,7 +72,7 @@
 		<div class="row propertyList">	
 			<div class="twelve columns">
 				<div ng-repeat="city in cities" class="cityFile">
-					<div><h2>{{city.units}}x</h2><i class="fa fa-forward fa-2x"></i></div>
+					<div><h2>{{city.units}}x</h2><img ng-src="{{city.img}}"></div>
 					<div><h3>{{city.cityName}}</h3></div>
 					<div>
 						<button ng-click="gameData.buy($index)" class="buy {{city.colorBuy}}">Buy ${{city.buyPriceAbb}}</button>
@@ -105,6 +105,9 @@
 
 	<audio autoplay loop id="testLoop">
 	  <source src="Audio/loop.wav" type="audio/wav">
+	</audio>
+	<audio id="chaChing">
+	  <source src="Audio/chaChing.wav" type="audio/wav">
 	</audio>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
