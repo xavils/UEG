@@ -455,6 +455,7 @@ angular.module('game', [])
 		$('.smallNet').hide(500);
 		$('.largeNet').show(500);
 		$('.gameOver').show(500);
+		document.getElementById("testLoop").pause();
 
 		$scope.$apply(function(){
 			// Game over message
