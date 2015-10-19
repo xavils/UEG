@@ -11,7 +11,7 @@ Welcome to unReal Estate, the game where you become a real estate mogul! The goa
 - Once you have enough savings buy an apartment where you can afford it.
 - You can sell any/all your properties as long as you have waited a year since the last bought property in that city.
 - If you have enough savings, cancel your mortgage to avoid paying hefty interests.
-- Every 15 years you will be able to refurbish your properties to avoid loosing value.
+- Every 15 years you will be able to refurbish your properties to avoid losing value.
 - Adjust the game speed (bottom right) to your playing abilities.
 
 **Some help:**
